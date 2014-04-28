@@ -18,9 +18,12 @@
   "trailing": true,
   "smarttabs": true,
   "white": true,
-  "globals" : {
+  "globals": {
     "angular": true,
-    "_": true
-  },
-  "excludes": ["app/templates/**""]
+    "_": true,
+    "global": true,
+    "describe": true,
+    "beforeEach": true,
+    "it": true
+  }
 }

@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 'use strict';
 
 var gulp = require('gulp'),
@@ -66,3 +67,4 @@ gulp.task('open', ['scripts'<% if (includeScss) { %>, 'styles'<% } %>], function
 gulp.task('default', function () {
   gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
 });
+/* jshint ignore:end */
