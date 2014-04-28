@@ -9,7 +9,7 @@
 * [Neat](http://neat.bourbon.io/)
 * [Gulp](http://gulpjs.com/)
 * [Built-in server](http://www.senchalabs.org/connect/)
-* [LiveReload with](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
+* [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
 * [JSHint](http://www.jshint.com/)
 * [Growl Notifications](http://growl.info/)
 * [Wiredep](https://github.com/taptapship/wiredep)
