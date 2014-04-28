@@ -21,7 +21,8 @@ describe('sandbox generator', function () {
   it('creates expected project files', function (done) {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
-      features : []
+      basicFeatures : [],
+      scssFeatures : []
     });
 
     var expectedFiles = [
@@ -50,7 +51,8 @@ describe('sandbox generator', function () {
   it('should generate an angular app', function (done) {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
-      features: [ 'includeAngular', 'includeLodash', 'includeScss', 'includeNormalizeCss', 'includeBourbon', 'includeNeat' ]
+      basicFeatures : ['includeAngular', 'includeLodash', 'includeScss', 'includeNormalizeCss'],
+      scssFeatures : ['includeBourbon', 'includeNeat']
     });
 
     var expectedFiles = [
