@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     open = require('gulp-open'),
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),
-    notify = growl();
+    notify = growl(),
+    wiredep = require('wiredep').stream;
 
 <% if (includeScss) { %>
 gulp.task('styles', function () {
@@ -66,5 +67,14 @@ gulp.task('open', ['scripts'<% if (includeScss) { %>, 'styles'<% } %>], function
 
 gulp.task('default', function () {
   gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
+});
+
+// inject bower components
+gulp.task('wiredep', function () {
+  gulp.src('public/*.html')
+  .pipe(wiredep({
+    directory: 'public/lib'
+  }))
+  .pipe(gulp.dest('public'));
 });
 /* jshint ignore:end */
