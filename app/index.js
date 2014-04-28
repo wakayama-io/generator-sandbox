@@ -33,7 +33,7 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     default: path.basename(process.cwd())
   }, {
     type: 'checkbox',
-    name: 'features',
+    name: 'basicFeatures',
     message: 'What would you like to include?',
     choices: [{
       name: 'AngularJS',
@@ -44,39 +44,35 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       value: 'includeLodash',
       checked: false
     }, {
-      name: 'SCSS',
-      value: 'includeScss',
-      checked: false
-    }, {
       name: 'Normalize.css',
       value: 'includeNormalizeCss',
+      checked: false
+    }, {
+      name: 'SCSS',
+      value: 'includeScss',
       checked: false
     }]
   }, {
     when: function (answers) {
-      return answers.features.indexOf('includeScss') !== -1;
+      return answers.basicFeatures.indexOf('includeScss') !== -1;
     },
-    type: 'confirm',
-    name: 'Bourbon',
-    value: 'includeBourbon',
-    message: 'Would you like to include bourbon? Read up more at \n' +
-      chalk.green('http://bourbon.io/'),
-    default: false
-  }, {
-    when: function (answers) {
-      return answers.features.indexOf('includeBourbon') !== -1;
-    },
-    type: 'confirm',
-    name: 'Neat',
-    value: 'includeNeat',
-    message: 'Would you like to include neat? Read up more at \n' +
-      chalk.green('http://neat.bourbon.io/'),
-    default: false
+    type: 'checkbox',
+    name: 'scssFeatures',
+    message: 'Which SCSS libraries would you like to include?',
+    choices: [{
+      name: 'Bourbon',
+      value: 'includeBourbon',
+      checked: false
+    }, {
+      name: 'Neat',
+      value: 'includeNeat',
+      checked: false
+    }]
   }];
 
   this.prompt(prompts, function (answers) {
     this.appName = answers.appName;
-    var features = answers.features;
+    var features = answers.basicFeatures.concat(answers.scssFeatures);
 
     function hasFeature(feat) {
       return features.indexOf(feat) !== -1;
