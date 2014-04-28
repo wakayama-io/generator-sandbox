@@ -7,8 +7,8 @@ var gulp = require('gulp'),<% if (includeScss) { %>
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),
     notify = growl(),
-    wiredep = require('wiredep').stream;
-<% if (includeScss) { %>
+    wiredep = require('wiredep').stream;<% if (includeScss) { %>
+
   gulp.task('styles', function () {
     return gulp.src('./public/styles/scss/*.scss')
       .pipe(sass())
