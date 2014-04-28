@@ -8,9 +8,9 @@
   <!-- endbower -->
   <link rel="stylesheet" href="styles/<% if (includeScss) { %>css/<% } %>main.css">
 </head>
-<body>
-  <% if (includeAngular) { %><script src="lib/angular/angular.js"></script><% }%>
-  <% if (includeLodash) { %>  <script src="lib/lodash/dist/lodash.compat.js"></script><% }%>
+<body><% if (includeAngular) { %>
+  <script src="lib/angular/angular.js"></script><% }%><% if (includeLodash) { %>
+  <script src="lib/lodash/dist/lodash.compat.js"></script><% }%>
   <!-- bower:js -->
   <!-- endbower -->
   <script src="scripts/main.js"></script>

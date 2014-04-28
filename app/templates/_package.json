@@ -2,8 +2,8 @@
   "name": "<%= appName %>",
   "version": "0.0.0",
   "devDependencies": {
-    "gulp": "*",
-    <% if (includeScss) { %>"gulp-ruby-sass": "*",<% }%>
+    "gulp": "*",<% if (includeScss) { %>
+    "gulp-ruby-sass": "*",<% }%>
     "gulp-jshint": "*",
     "gulp-open": "*",
     "gulp-livereload": "*",

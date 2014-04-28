@@ -1,26 +1,23 @@
-/* jshint ignore:start */
 'use strict';
 
-var gulp = require('gulp'),
-    <% if (includeScss) { %>sass = require('gulp-ruby-sass'),<% } %>
+var gulp = require('gulp'),<% if (includeScss) { %>
+    sass = require('gulp-ruby-sass'),<% } %>
     jshint = require('gulp-jshint'),
     open = require('gulp-open'),
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),
     notify = growl(),
     wiredep = require('wiredep').stream;
-
 <% if (includeScss) { %>
-gulp.task('styles', function () {
-  return gulp.src('./public/styles/scss/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('./public/styles/css'))
-    .pipe(notify({
-      title: 'Done.',
-      message: 'Styles task complete'
-    }));
-});
-<% } %>
+  gulp.task('styles', function () {
+    return gulp.src('./public/styles/scss/*.scss')
+      .pipe(sass())
+      .pipe(gulp.dest('./public/styles/css'))
+      .pipe(notify({
+        title: 'Done.',
+        message: 'Styles task complete'
+      }));
+  });<% } %>
 
 gulp.task('scripts', function () {
   return gulp.src('./public/scripts/**/*.js')
@@ -32,10 +29,9 @@ gulp.task('scripts', function () {
     }));
 });
 
-gulp.task('watch', function () {
-<% if (includeScss) { %>  // Watch .scss files
-  gulp.watch('./public/styles/**/*.scss', ['styles']);
-<% } %>
+gulp.task('watch', function () {<% if (includeScss) { %>
+  // Watch .scss files
+  gulp.watch('./public/styles/**/*.scss', ['styles']);<% } %>
   // Watch .js files
   gulp.watch(['./public/scripts/**/*.js'], ['scripts']);
 
@@ -77,4 +73,3 @@ gulp.task('wiredep', function () {
   }))
   .pipe(gulp.dest('public'));
 });
-/* jshint ignore:end */

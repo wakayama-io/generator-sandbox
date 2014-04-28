@@ -22,8 +22,8 @@
   "maxdepth": 3,
   "maxstatements": 4,
   "maxcomplexity": 10,
-  "globals": {
-    <% if (includeAngular) { %>"angular": true,<% } %>
-    <% if (includeLodash) { %>"_": true<% } %>
+  "globals": {<% if (includeAngular) { %>
+    "angular": true<% } %><% if (includeAngular && includeLodash) { %>,<% } %><% if (includeLodash) { %>
+    "_": true<% } %>
   }
 }
