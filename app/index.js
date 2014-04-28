@@ -47,6 +47,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       name: 'SCSS',
       value: 'includeScss',
       checked: false
+    }, {
+      name: 'Normalize.css',
+      value: 'includeNormalizeCss',
+      checked: false
     }]
   }, {
     when: function (answers) {
@@ -80,6 +84,7 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.includeAngular = hasFeature('includeAngular');
     this.includeLodash = hasFeature('includeLodash');
     this.includeScss = hasFeature('includeScss');
+    this.includeNormalizeCss = hasFeature('includeNormalizeCss');
     this.includeBourbon = hasFeature('includeBourbon');
     this.includeNeat = hasFeature('includeNeat');
 

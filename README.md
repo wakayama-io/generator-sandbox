@@ -4,6 +4,7 @@
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
 * [SCSS](http://sass-lang.com/)
+* [Normalize.css](http://necolas.github.io/normalize.css/)
 * [Bourbon](http://bourbon.io/)
 * [Neat](http://neat.bourbon.io/)
 * [Gulp](http://gulpjs.com/)

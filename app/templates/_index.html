@@ -2,8 +2,8 @@
 <html lang="en" <% if (includeAngular) { %>ng-app="<%= appName %>"<% } %>>
 <head>
   <meta charset="UTF-8">
-  <title><%= appName %></title>
-  <link rel="stylesheet" href="lib/normalize.css/normalize.css">
+  <title><%= appName %></title><% if (includeNormalizeCss) { %>
+  <link rel="stylesheet" href="lib/normalize.css/normalize.css"><% } %>
   <link rel="stylesheet" href="styles/<% if (includeScss) { %>css/<% } %>main.css">
 </head>
 <body>
