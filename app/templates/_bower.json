@@ -1,11 +1,11 @@
 {
   "name": "<%= appName %>",
   "version": "0.0.0",
-  "dependencies": {<%if(includeNormalizeCss){%>,
-    "normalize.css": "*"<%}%><%if(includeAngular){%>,
-    "angular": "*"<%}%><%if(includeLodash){%>,
-    "lodash": "*"<%}%><%if(includeLodash){%>,
-    "bourbon": "*"<%}%><%if(includeNeat){%>,
-    "neat": "*"<%}%>
+  "dependencies": {<% if (includeNormalizeCss) { %>,
+    "normalize.css": "*"<% } %><% if (includeAngular) { %>,
+    "angular": "*"<% } %><% if (includeLodash) { %>,
+    "lodash": "*"<% } %><% if (includeLodash) { %>,
+    "bourbon": "*"<% } %><%if (includeNeat) { %>,
+    "neat": "*"<% } %>
   }
 }

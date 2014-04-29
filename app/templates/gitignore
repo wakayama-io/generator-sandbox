@@ -52,8 +52,8 @@ node_modules
 
 
 ### Bower ###
-public/lib
+public/lib<% if (includeScss) { %>
 
 
 ### Sass ###
-<% if (includeScss) { %>.sass-cache/<% } %>
+.sass-cache/<% } %>

@@ -1,8 +1,8 @@
-<% if (includeBourbon) { %>@import "../../lib/bourbon/dist/bourbon";<% }%><% if (includeNeat) { %>
+<% if (includeBourbon) { %>@import "../../lib/bourbon/dist/bourbon";<% } %><% if (includeNeat) { %>
 @import "../../lib/neat/app/assets/stylesheets/neat";
 
 $visual-grid: true;
 $visual-grid-color: red;
 $visual-grid-index: front;
 $visual-grid-opacity: 0.5;
-<% }%>
+<% } %>
