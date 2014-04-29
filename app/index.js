@@ -48,6 +48,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       value: 'includeNormalizeCss',
       checked: false
     }, {
+      name: 'Csswizardry-grids',
+      value: 'includeCsswizardryGrids',
+      checked: false
+    }, {
       name: 'SCSS',
       value: 'includeScss',
       checked: false
@@ -58,14 +62,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     },
     type: 'checkbox',
     name: 'scssFeatures',
-    message: 'Which SCSS libraries would you like to include?',
+    message: 'Which SCSS features would you like to include?',
     choices: [{
       name: 'Bourbon',
       value: 'includeBourbon',
-      checked: false
-    }, {
-      name: 'Neat',
-      value: 'includeNeat',
       checked: false
     }]
   }];
@@ -81,8 +81,8 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.includeLodash = hasFeature('includeLodash');
     this.includeScss = hasFeature('includeScss');
     this.includeNormalizeCss = hasFeature('includeNormalizeCss');
+    this.includeCsswizardryGrids = hasFeature('includeCsswizardryGrids');
     this.includeBourbon = hasFeature('includeBourbon');
-    this.includeNeat = hasFeature('includeNeat');
 
     done();
   }.bind(this));

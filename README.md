@@ -3,16 +3,16 @@
 ## Features
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
-* [SCSS](http://sass-lang.com/)
 * [Normalize.css](http://necolas.github.io/normalize.css/)
+* [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
+* [SCSS](http://sass-lang.com/)
 * [Bourbon](http://bourbon.io/)
-* [Neat](http://neat.bourbon.io/)
 * [Gulp](http://gulpjs.com/)
+* [JSHint](http://www.jshint.com/)
+* [Wiredep](https://github.com/taptapship/wiredep)
 * [Built-in server](http://www.senchalabs.org/connect/)
 * [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
-* [JSHint](http://www.jshint.com/)
 * [Growl Notifications](http://growl.info/)
-* [Wiredep](https://github.com/taptapship/wiredep)
 
 ## Dependencies
 * [Node.js](http://nodejs.org/)
