@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var util = require('util');
 var path = require('path');
 var chalk = require('chalk');
+var _ = require('lodash');
 
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
@@ -17,6 +18,10 @@ var SandboxGenerator =  module.exports = function SandboxGenerator(args, options
 };
 
 util.inherits(SandboxGenerator, yeoman.generators.Base);
+
+SandboxGenerator.prototype._prettyJSON = function _prettyJSON (obj){
+  return JSON.stringify(obj, null, 2);
+};
 
 // Welcome message
 SandboxGenerator.prototype.welcome = function welcome() {
@@ -88,17 +93,71 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
   }.bind(this));
 };
 
+SandboxGenerator.prototype.app = function app() {
+  this.mkdir('public');
+  this.mkdir('public/scripts');
+  this.mkdir('public/styles');
+
+  this.template('_index.html', 'public/index.html');
+  this.template('_main.js', 'public/scripts/main.js');
+
+  if (this.includeScss) {
+    this.mkdir('public/styles/css');
+    this.mkdir('public/styles/scss');
+    this.template('_main.scss', 'public/styles/scss/main.scss');
+  } else {
+    this.copy('_main.css', 'public/styles/main.css');
+  }
+};
+
 SandboxGenerator.prototype.gulpfile = function gulpfile() {
   this.template('_gulpfile.js', 'gulpfile.js');
 };
 
 SandboxGenerator.prototype.packageJSON = function packageJSON() {
-  this.template('_package.json', 'package.json');
+  // Generate package.json
+  var _packageJSON = require('./templates/_package.json');
+  _packageJSON.name = this.appName;
+
+  // Add dev-dependencies
+  _packageJSON.devDependencies['gulp'] = '*';
+  if (this.includeScss === true) {
+    _packageJSON.devDependencies['gulp-ruby-sass'] = '*';
+  }
+  _packageJSON.devDependencies['gulp-jshint'] = '*';
+  _packageJSON.devDependencies['gulp-open'] = '*';
+  _packageJSON.devDependencies['gulp-livereload'] = '*';
+  _packageJSON.devDependencies['gulp-notify-growl'] = '*';
+  _packageJSON.devDependencies['gulp-connect'] = '*';
+  _packageJSON.devDependencies['wiredep'] = '*';
+  // Write to file
+  this.write("package.json", this._prettyJSON(_packageJSON));
 };
 
 SandboxGenerator.prototype.bower = function bower() {
+  // Generate bower.json
+  var _bowerJSON = require('./templates/_bower.json');
+  _bowerJSON.name = this.appName;
+
+  // Add dependencies
+  if (this.includeAngular === true) {
+    _bowerJSON.dependencies['angular'] = '*';
+  }
+  if (this.includeLodash === true) {
+    _bowerJSON.dependencies['lodash'] = '*';
+  }
+  if (this.includeNormalizeCss === true) {
+    _bowerJSON.dependencies['normalize.css'] = '*';
+  }
+  if (this.includeCsswizardryGrids === true) {
+    _bowerJSON.dependencies['csswizardry-grids'] = '*';
+  }
+  if (this.includeBourbon === true) {
+    _bowerJSON.dependencies['bourbon'] = '*';
+  }
+  // Write to file
+  this.write("bower.json", this._prettyJSON(_bowerJSON));
   this.copy('bowerrc', '.bowerrc');
-  this.template('_bower.json', 'bower.json');
 };
 
 SandboxGenerator.prototype.jsHint = function jsHint() {
@@ -116,21 +175,4 @@ SandboxGenerator.prototype.git = function git() {
 
 SandboxGenerator.prototype.readme = function readme() {
   this.template('_README.md', 'README.md');
-};
-
-SandboxGenerator.prototype.app = function app() {
-  this.mkdir('public');
-  this.mkdir('public/scripts');
-  this.mkdir('public/styles');
-
-  this.template('_index.html', 'public/index.html');
-  this.template('_main.js', 'public/scripts/main.js');
-
-  if (this.includeScss) {
-    this.mkdir('public/styles/css');
-    this.mkdir('public/styles/scss');
-    this.template('_main.scss', 'public/styles/scss/main.scss');
-  } else {
-    this.copy('_main.css', 'public/styles/main.css');
-  }
 };

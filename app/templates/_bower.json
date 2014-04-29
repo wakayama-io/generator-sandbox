@@ -1,11 +1,5 @@
 {
   "name": "<%= appName %>",
   "version": "0.0.0",
-  "dependencies": {<% if (includeAngular) { %>,
-    "angular": "*"<% } %><% if (includeLodash) { %>,
-    "lodash": "*"<% } %><% if (includeNormalizeCss) { %>,
-    "normalize.css": "*"<% } %><% if (includeCsswizardryGrids) { %>,
-    "csswizardry-grids": "*"<% } %><%if (includeBourbon) { %>,
-    "bourbon": "*"<% } %>
-  }
+  "dependencies": {}
 }
