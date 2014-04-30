@@ -76,7 +76,7 @@ describe('sandbox generator', function () {
       ['.jshintrc', /"angular": true/]
     ];
 
-    this.app.options['skip-install'] = false;
+    this.app.options['skip-install'] = true;
 
     this.app.run({}, function () {
       helpers.assertFile(expectedFiles);
