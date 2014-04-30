@@ -19,7 +19,7 @@ var SandboxGenerator =  module.exports = function SandboxGenerator(args, options
 
 util.inherits(SandboxGenerator, yeoman.generators.Base);
 
-SandboxGenerator.prototype._prettyJSON = function _prettyJSON (obj){
+SandboxGenerator.prototype._prettyJSON = function _prettyJSON(obj){
   return JSON.stringify(obj, null, 2);
 };
 
@@ -131,7 +131,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   _packageJSON.devDependencies['gulp-connect'] = '*';
   _packageJSON.devDependencies['wiredep'] = '*';
   // Write to file
-  this.write("package.json", this._prettyJSON(_packageJSON));
+  this.write('package.json', this._prettyJSON(_packageJSON));
 };
 
 SandboxGenerator.prototype.bower = function bower() {
@@ -156,7 +156,7 @@ SandboxGenerator.prototype.bower = function bower() {
     _bowerJSON.dependencies['bourbon'] = '*';
   }
   // Write to file
-  this.write("bower.json", this._prettyJSON(_bowerJSON));
+  this.write('bower.json', this._prettyJSON(_bowerJSON));
   this.copy('bowerrc', '.bowerrc');
 };
 
