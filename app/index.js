@@ -148,6 +148,9 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmLatest(packageName, {timeout: 1900}, function (err, result) {
       if (!err && result.name && result.version) {
         _packageJSON.devDependencies[result.name] = result.version;
+      } else {
+        // take the latest
+        _packageJSON.devDependencies[packageName] = '*';
       }
       if (!--count) {
         // Write to file
@@ -198,6 +201,9 @@ SandboxGenerator.prototype.bower = function bower() {
     bowerLatest(packageName, function (result) {
       if (result && result.name && result.version) {
         _bowerJSON.dependencies[result.name] = result.version;
+      } else {
+        // take the latest
+        _bowerJSON.dependencies[packageName] = '*';
       }
       if (!--count) {
         // Write to file
