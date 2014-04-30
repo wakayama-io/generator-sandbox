@@ -1,4 +1,8 @@
-# generator-sandbox [![Build Status](https://secure.travis-ci.org/kojiwakayama/generator-sandbox.png?branch=master)](https://travis-ci.org/kojiwakayama/generator-sandbox)
+# generator-sandbox 
+[![NPM version](https://badge.fury.io/js/generator-sandbox.svg)](http://badge.fury.io/js/generator-sandbox)
+[![Build Status](https://secure.travis-ci.org/kojiwakayama/generator-sandbox.png?branch=master)](https://travis-ci.org/kojiwakayama/generator-sandbox)
+[![Dependency Status](https://david-dm.org/kojiwakayama/generator-sandbox.svg)](https://david-dm.org/kojiwakayama/generator-sandbox)
+[![Coverage Status](https://coveralls.io/repos/kojiwakayama/generator-sandbox/badge.png)](https://coveralls.io/r/kojiwakayama/generator-sandbox)
 
 ## Features
 * [AngularJS](https://angularjs.org/)
@@ -34,6 +38,20 @@ npm install -g generator-sandbox
 ## Options
 * `--skip-install`
   Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
+
+
+## Contributing
+Use git commit hook
+
+```
+#!/bin/sh
+npm test
+if [ $? -ne 0 ]; then
+ echo "Tests failed, please fix code and recommit"
+ exit 1
+fi
+exit 0
+```
 
 ## License
 [BSD license](http://opensource.org/licenses/bsd-license.php)

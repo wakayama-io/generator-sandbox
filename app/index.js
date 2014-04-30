@@ -11,7 +11,6 @@ var bowerLatest = require('bower-latest');
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.pkg = require('../package.json');
   this.options = options;
 
   this.on('end', function () {
