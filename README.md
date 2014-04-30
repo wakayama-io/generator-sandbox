@@ -2,7 +2,7 @@
 [![NPM version](https://badge.fury.io/js/generator-sandbox.svg)](http://badge.fury.io/js/generator-sandbox)
 [![Build Status](https://secure.travis-ci.org/kojiwakayama/generator-sandbox.png?branch=master)](https://travis-ci.org/kojiwakayama/generator-sandbox)
 [![Dependency Status](https://david-dm.org/kojiwakayama/generator-sandbox.svg)](https://david-dm.org/kojiwakayama/generator-sandbox)
-[![Coverage Status](https://coveralls.io/repos/kojiwakayama/generator-sandbox/badge.png)](https://coveralls.io/r/kojiwakayama/generator-sandbox)
+[![Coverage Status](https://coveralls.io/repos/kojiwakayama/generator-sandbox/badge.png?branch=master)](https://coveralls.io/r/kojiwakayama/generator-sandbox?branch=master)
 
 ## Features
 * [AngularJS](https://angularjs.org/)
