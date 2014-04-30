@@ -49,6 +49,7 @@ describe('sandbox generator', function () {
   });
 
   it('should generate an angular app', function (done) {
+    this.timeout(15000);
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
       basicFeatures : ['includeAngular', 'includeLodash', 'includeNormalizeCss', 'includeCsswizardryGrids', 'includeScss'],
@@ -68,11 +69,11 @@ describe('sandbox generator', function () {
     var expectedContent = [
       ['public/index.html', /<title>myapp<\/title>/],
       ['bower.json', /"name": "myapp"/],
-      ['bower.json', /"angular": "*"/],
-      ['bower.json', /"lodash": "*"/],
-      ['bower.json', /"normalize.css": "*"/],
-      ['bower.json', /"csswizardry-grids": "*"/],
-      ['bower.json', /"bourbon": "*"/],
+      ['bower.json', /"angular"/],
+      ['bower.json', /"lodash"/],
+      ['bower.json', /"normalize.css"/],
+      ['bower.json', /"csswizardry-grids"/],
+      ['bower.json', /"bourbon"/],
       ['.jshintrc', /"angular": true/]
     ];
 

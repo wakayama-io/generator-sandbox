@@ -5,6 +5,8 @@ var util = require('util');
 var path = require('path');
 var chalk = require('chalk');
 var _ = require('lodash');
+var npmLatest = require('npm-latest');
+var bowerLatest = require('bower-latest');
 
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
@@ -19,7 +21,7 @@ var SandboxGenerator =  module.exports = function SandboxGenerator(args, options
 
 util.inherits(SandboxGenerator, yeoman.generators.Base);
 
-SandboxGenerator.prototype._prettyJSON = function _prettyJSON(obj){
+SandboxGenerator.prototype._prettyJSON = function _prettyJSON(obj) {
   return JSON.stringify(obj, null, 2);
 };
 
@@ -115,49 +117,96 @@ SandboxGenerator.prototype.gulpfile = function gulpfile() {
 };
 
 SandboxGenerator.prototype.packageJSON = function packageJSON() {
+
+  var cb = this.async();
+
   // Generate package.json
   var _packageJSON = require('./templates/_package.json');
   _packageJSON.name = this.appName;
 
+  var npmList = [];
+
   // Add dev-dependencies
-  _packageJSON.devDependencies['gulp'] = '*';
+  npmList.push('gulp');
   if (this.includeScss === true) {
-    _packageJSON.devDependencies['gulp-ruby-sass'] = '*';
+    npmList.push('gulp-ruby-sass');
   }
-  _packageJSON.devDependencies['gulp-jshint'] = '*';
-  _packageJSON.devDependencies['gulp-open'] = '*';
-  _packageJSON.devDependencies['gulp-livereload'] = '*';
-  _packageJSON.devDependencies['gulp-notify-growl'] = '*';
-  _packageJSON.devDependencies['gulp-connect'] = '*';
-  _packageJSON.devDependencies['wiredep'] = '*';
-  // Write to file
-  this.write('package.json', this._prettyJSON(_packageJSON));
+  npmList.push('gulp-jshint');
+  npmList.push('gulp-open');
+  npmList.push('gulp-livereload');
+  npmList.push('gulp-notify-growl');
+  npmList.push('gulp-connect');
+  npmList.push('wiredep');
+
+  var count = npmList.length;
+
+  if (count === 0) {
+    return cb();
+  }
+
+  _.each(npmList, function (packageName) {
+    npmLatest(packageName, {timeout: 1900}, function (err, result) {
+      if (!err && result.name && result.version) {
+        _packageJSON.devDependencies[result.name] = result.version;
+      }
+      if (!--count) {
+        // Write to file
+        this.write('package.json', this._prettyJSON(_packageJSON.devDependencies));
+        cb();
+      }
+    }.bind(this));
+  }, this);
+
 };
 
 SandboxGenerator.prototype.bower = function bower() {
+
+  var cb = this.async();
+
   // Generate bower.json
   var _bowerJSON = require('./templates/_bower.json');
   _bowerJSON.name = this.appName;
 
+  var bowerList = [];
   // Add dependencies
   if (this.includeAngular === true) {
-    _bowerJSON.dependencies['angular'] = '*';
+    bowerList.push('angular');
   }
   if (this.includeLodash === true) {
-    _bowerJSON.dependencies['lodash'] = '*';
+    bowerList.push('lodash');
   }
   if (this.includeNormalizeCss === true) {
-    _bowerJSON.dependencies['normalize.css'] = '*';
+    bowerList.push('normalize.css');
   }
   if (this.includeCsswizardryGrids === true) {
-    _bowerJSON.dependencies['csswizardry-grids'] = '*';
+    bowerList.push('csswizardry-grids');
   }
   if (this.includeBourbon === true) {
-    _bowerJSON.dependencies['bourbon'] = '*';
+    bowerList.push('bourbon');
   }
-  // Write to file
-  this.write('bower.json', this._prettyJSON(_bowerJSON));
-  this.copy('bowerrc', '.bowerrc');
+
+  var count = bowerList.length;
+
+  if (count === 0) {
+    this.write('bower.json', this._prettyJSON(_bowerJSON));
+    this.copy('bowerrc', '.bowerrc');
+    return cb();
+  }
+
+  var that = this;
+  _.each(bowerList, function (packageName) {
+    bowerLatest(packageName, function (result) {
+      if (result && result.name && result.version) {
+        _bowerJSON.dependencies[result.name] = result.version;
+      }
+      if (!--count) {
+        // Write to file
+        that.write('bower.json', that._prettyJSON(_bowerJSON));
+        that.copy('bowerrc', '.bowerrc');
+        cb();
+      }
+    });
+  });
 };
 
 SandboxGenerator.prototype.jsHint = function jsHint() {
