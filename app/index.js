@@ -117,7 +117,6 @@ SandboxGenerator.prototype.gulpfile = function gulpfile() {
 };
 
 SandboxGenerator.prototype.packageJSON = function packageJSON() {
-
   var cb = this.async();
 
   // Generate package.json
