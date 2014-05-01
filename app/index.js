@@ -1,12 +1,12 @@
 'use strict';
 
-var yeoman = require('yeoman-generator');
-var util = require('util');
-var path = require('path');
-var chalk = require('chalk');
-var _ = require('lodash');
-var npmLatest = require('npm-latest');
-var bowerLatest = require('bower-latest');
+var yeoman = require('yeoman-generator'),
+  util = require('util'),
+  path = require('path'),
+  chalk = require('chalk'),
+  _ = require('lodash'),
+  npmLatest = require('npm-latest'),
+  bowerLatest = require('bower-latest');
 
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
@@ -135,6 +135,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   }
   npmList.push('gulp-jshint');
   npmList.push('gulp-jscs');
+  npmList.push('jshint-stylish');
   npmList.push('gulp-open');
   npmList.push('gulp-livereload');
   npmList.push('gulp-notify-growl');

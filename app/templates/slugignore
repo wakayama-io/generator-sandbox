@@ -1,0 +1,5 @@
+.slugignore
+README.md
+.gitignore
+.gitattributes
+.editorconfig

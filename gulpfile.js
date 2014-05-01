@@ -3,6 +3,7 @@
 var gulp   = require('gulp');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
+var stylish = require('jshint-stylish');
 var istanbul = require('gulp-istanbul');
 var mocha  = require('gulp-mocha');
 
@@ -16,7 +17,7 @@ gulp.task('lint', function () {
   return gulp.src(paths.lint)
     .pipe(jshint('.jshintrc'))
     .pipe(jscs())
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('istanbul', function (cb) {

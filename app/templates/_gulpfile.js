@@ -4,6 +4,7 @@ var gulp = require('gulp'),<% if (includeScss) { %>
     sass = require('gulp-ruby-sass'),<% } %>
     jshint = require('gulp-jshint'),
     jscs = require('gulp-jscs'),
+    stylish = require('jshint-stylish'),
     open = require('gulp-open'),
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),
@@ -24,7 +25,7 @@ gulp.task('scripts', function () {
   return gulp.src('./public/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
     .pipe(jscs())
-    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter(stylish))
     .pipe(notify({
       title: 'Done.',
       message: 'Scripts task complete'
