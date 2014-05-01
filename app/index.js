@@ -115,10 +115,6 @@ SandboxGenerator.prototype.app = function app() {
   }
 };
 
-SandboxGenerator.prototype.gulpfile = function gulpfile() {
-  this.template('_gulpfile.js', 'gulpfile.js');
-};
-
 SandboxGenerator.prototype.packageJSON = function packageJSON() {
   var cb = this.async();
 
@@ -218,6 +214,33 @@ SandboxGenerator.prototype.bower = function bower() {
       }
     });
   });
+};
+
+SandboxGenerator.prototype.wireDep = function wireDep() {
+  var scriptExcludes = [];
+  if (this.includeAngular === true) {
+    scriptExcludes.push('\'angular\'');
+  }
+  if (this.includeLodash === true) {
+    scriptExcludes.push('\'lodash\'');
+  }
+  this.wiredepScriptExcludes = scriptExcludes.join(', ');
+
+  var scssExcludes = [];
+  if (this.includeNormalizeScss === true) {
+    scssExcludes.push('\'modularized-normalize-scss\'');
+  }
+  if (this.includeCsswizardryGrids === true) {
+    scssExcludes.push('\'csswizardry-grids\'');
+  }
+  if (this.includeBourbon === true) {
+    scssExcludes.push('\'bourbon\'');
+  }
+  this.wiredepScssExcludes = scssExcludes.join(', ');
+};
+
+SandboxGenerator.prototype.gulpfile = function gulpfile() {
+  this.template('_gulpfile.js', 'gulpfile.js');
 };
 
 SandboxGenerator.prototype.jsHint = function jsHint() {

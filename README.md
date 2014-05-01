@@ -24,7 +24,7 @@
 * [Yeoman](http://yeoman.io/)
 * [Bower](http://bower.io/)
 * [Gulp.js](http://gulpjs.com/)
-* [Sass < 3.3.x](http://sass-lang.com/install)
+* [Sass > 3.3.x](http://sass-lang.com/install)
 
 ## Getting Started
 To install generator-sandbox from npm, run:

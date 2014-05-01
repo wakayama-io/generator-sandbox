@@ -32,21 +32,6 @@ gulp.task('scripts', function () {
     }));
 });
 
-gulp.task('watch', function () {<% if (includeScss) { %>
-  // Watch .scss files
-  gulp.watch('./public/styles/**/*.scss', ['styles']);<% } %>
-  // Watch .js files
-  gulp.watch(['./public/scripts/**/*.js'], ['scripts']);
-
-  // Create LiveReload server
-  var server = livereload();
-
-  // // Watch any files, reload on change
-  gulp.watch(['./**', '!./node_modules/**', '!./public/lib/**']).on('change', function (file) {
-    server.changed(file.path);
-  });
-});
-
 gulp.task('serve', function () {
   var connect = require('connect'),
       directory = __dirname + '/public',
@@ -64,15 +49,40 @@ gulp.task('open', ['scripts'<% if (includeScss) { %>, 'styles'<% } %>], function
   .pipe(open('', {url: 'http://localhost:3000'}));
 });
 
-gulp.task('default', function () {
-  gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
-});
-
 // inject bower components
 gulp.task('wiredep', function () {
   gulp.src('public/*.html')
   .pipe(wiredep({
-    directory: 'public/lib'
+    directory: 'public/lib',
+    exclude: [<%=wiredepScriptExcludes%>]
   }))
-  .pipe(gulp.dest('public'));
+  .pipe(gulp.dest('public'));<% if (includeScss) { %>
+
+  gulp.src('public/styles/scss/*.scss')
+  .pipe(wiredep({
+    directory: 'public/lib',
+    exclude: [<%=wiredepScssExcludes%>]
+  }))
+  .pipe(gulp.dest('public/styles/scss'));<% } %>
+});
+
+gulp.task('watch', function () {<% if (includeScss) { %>
+  // Watch .scss files
+  gulp.watch('./public/styles/**/*.scss', ['styles']);<% } %>
+  // Watch .js files
+  gulp.watch(['./public/scripts/**/*.js'], ['scripts']);
+  // Watch bower.json
+  gulp.watch('./bower.json', ['wiredep']);
+
+  // Create LiveReload server
+  var server = livereload();
+
+  // // Watch any files, reload on change
+  gulp.watch(['./**', '!./node_modules/**', '!./public/lib/**']).on('change', function (file) {
+    server.changed(file.path);
+  });
+});
+
+gulp.task('default', function () {
+  gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
 });

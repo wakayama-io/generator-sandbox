@@ -20,7 +20,7 @@
   "white": true,
   "maxparams": 4,
   "maxdepth": 3,
-  "maxstatements": 4,
+  "maxstatements": 5,
   "maxcomplexity": 10,
   "globals": {<% if (includeAngular) { %>
     "angular": true<% } %><% if (includeAngular && includeLodash) { %>,<% } %><% if (includeLodash) { %>

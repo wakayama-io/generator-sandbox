@@ -91,7 +91,7 @@ describe('the sandbox generator', function () {
       ['.gitignore', /.sass-cache\//],
       ['public/styles/scss/main.scss', /@import "..\/..\/lib\/modularized-normalize-scss\/normalize";/],
       ['public/styles/scss/main.scss', /@import "..\/..\/lib\/csswizardry-grids\/csswizardry-grids";/],
-      ['public/styles/scss/main.scss', /@import "..\/..\/lib\/bourbon\/dist\/bourbon";/]
+      ['public/styles/scss/main.scss', /@import "..\/..\/lib\/bourbon\/dist\/_bourbon";/]
     ];
 
     this.app.options['skip-install'] = true;
