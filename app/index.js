@@ -53,10 +53,6 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       value: 'includeLodash',
       checked: false
     }, {
-      name: 'Normalize.css',
-      value: 'includeNormalizeCss',
-      checked: false
-    }, {
       name: 'SCSS',
       value: 'includeScss',
       checked: false
@@ -69,6 +65,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     name: 'scssFeatures',
     message: 'Which SCSS features would you like to include?',
     choices: [{
+      name: 'Normalize.scss',
+      value: 'includeNormalizeScss',
+      checked: false
+    }, {
       name: 'Csswizardry-grids',
       value: 'includeCsswizardryGrids',
       checked: false
@@ -90,7 +90,7 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.includeAngular = hasFeature('includeAngular');
     this.includeLodash = hasFeature('includeLodash');
     this.includeScss = hasFeature('includeScss');
-    this.includeNormalizeCss = hasFeature('includeNormalizeCss');
+    this.includeNormalizeScss = hasFeature('includeNormalizeScss');
     this.includeCsswizardryGrids = hasFeature('includeCsswizardryGrids');
     this.includeBourbon = hasFeature('includeBourbon');
 
@@ -181,8 +181,8 @@ SandboxGenerator.prototype.bower = function bower() {
   if (this.includeLodash === true) {
     bowerList.push('lodash');
   }
-  if (this.includeNormalizeCss === true) {
-    bowerList.push('normalize.css');
+  if (this.includeNormalizeScss === true) {
+    bowerList.push('normalize.scss');
   }
   if (this.includeCsswizardryGrids === true) {
     bowerList.push('csswizardry-grids');

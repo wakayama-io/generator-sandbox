@@ -60,8 +60,8 @@ describe('the sandbox generator', function () {
   it('creates expected files when all features enabled', function (done) {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
-      basicFeatures : ['includeAngular', 'includeLodash', 'includeNormalizeCss', 'includeScss'],
-      scssFeatures : ['includeCsswizardryGrids', 'includeBourbon']
+      basicFeatures : ['includeAngular', 'includeLodash', 'includeScss'],
+      scssFeatures : ['includeNormalizeScss', 'includeCsswizardryGrids', 'includeBourbon']
     });
 
     var expectedFiles = [
@@ -78,12 +78,11 @@ describe('the sandbox generator', function () {
       ['public/index.html', /ng-app="myapp"/],
       ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
       ['public/index.html', /<script src="lib\/lodash\/dist\/lodash.compat.js"><\/script>/],
-      ['public/index.html', /<link rel="stylesheet" href="lib\/normalize.css\/normalize.css">/],
       ['public/index.html', /<link rel="stylesheet" href="styles\/css\/main.css">/],
       ['bower.json', /"name": "myapp"/],
       ['bower.json', /"angular"/],
       ['bower.json', /"lodash"/],
-      ['bower.json', /"normalize.css"/],
+      ['bower.json', /"normalize.scss"/],
       ['bower.json', /"csswizardry-grids"/],
       ['bower.json', /"bourbon"/],
       ['.jshintrc', /"angular": true/],
