@@ -5,19 +5,21 @@
 [![Coverage Status](https://coveralls.io/repos/kojiwakayama/generator-sandbox/badge.png?branch=master)](https://coveralls.io/r/kojiwakayama/generator-sandbox?branch=master)
 
 ## Features
+* [Gulp](http://gulpjs.com/)
+* [Built-in server](http://www.senchalabs.org/connect/)
+* [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
+* [Growl Notifications](http://growl.info/)
+* [JSHint](http://www.jshint.com/)
+* [Jscs](https://github.com/mdevils/node-jscs#configuration)
+* [Wiredep](https://github.com/taptapship/wiredep)
+
+## Optional
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
 * [Scss](http://sass-lang.com/)
 * [Normalize.scss](https://github.com/hail2u/normalize.scss)
 * [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
 * [Bourbon](http://bourbon.io/)
-* [Gulp](http://gulpjs.com/)
-* [Built-in server](http://www.senchalabs.org/connect/)
-* [JSHint](http://www.jshint.com/)
-* [Jscs](https://github.com/mdevils/node-jscs#configuration)
-* [Wiredep](https://github.com/taptapship/wiredep)
-* [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
-* [Growl Notifications](http://growl.info/)
 
 ## Dependencies
 * [Node.js](http://nodejs.org/)
@@ -40,20 +42,6 @@ npm install -g generator-sandbox
 ## Options
 * `--skip-install`
   Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
-
-
-## Contributing
-Use git commit hook
-
-```
-#!/bin/sh
-npm test
-if [ $? -ne 0 ]; then
- echo "Tests failed, please fix code and recommit"
- exit 1
-fi
-exit 0
-```
 
 ## License
 [BSD license](http://opensource.org/licenses/bsd-license.php)
