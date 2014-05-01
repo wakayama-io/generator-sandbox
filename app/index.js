@@ -11,9 +11,9 @@ var bowerLatest = require('bower-latest');
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.options = {
+  this.options = _.merge(this.options, {
     reqTimeout : 15000
-  };
+  });
   _.merge(this.options, options);
 
   this.on('end', function () {
@@ -23,7 +23,7 @@ var SandboxGenerator =  module.exports = function SandboxGenerator(args, options
 
 util.inherits(SandboxGenerator, yeoman.generators.Base);
 
-SandboxGenerator.prototype._prettyJSON = function _prettyJSON(obj) {
+SandboxGenerator.prototype._stringifyPrettyJSON = function _stringifyPrettyJSON(obj) {
   return JSON.stringify(obj, null, 2);
 };
 
@@ -123,7 +123,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   var cb = this.async();
 
   // Generate package.json
-  var _packageJSON = require('./templates/_package.json');
+  var _packageJSON = require(path.join(__dirname + '/templates/_package.json'));
   _packageJSON.name = this.appName;
 
   var npmList = [];
@@ -157,7 +157,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
       }
       if (!--count) {
         // Write to file
-        this.write('package.json', this._prettyJSON(_packageJSON));
+        this.write('package.json', this._stringifyPrettyJSON(_packageJSON));
         cb();
       }
     }.bind(this));
@@ -170,7 +170,7 @@ SandboxGenerator.prototype.bower = function bower() {
   var cb = this.async();
 
   // Generate bower.json
-  var _bowerJSON = require('./templates/_bower.json');
+  var _bowerJSON = require(path.join(__dirname + '/templates/_bower.json'));
   _bowerJSON.name = this.appName;
 
   var bowerList = [];
@@ -194,7 +194,7 @@ SandboxGenerator.prototype.bower = function bower() {
   var count = bowerList.length;
 
   if (count === 0) {
-    this.write('bower.json', this._prettyJSON(_bowerJSON));
+    this.write('bower.json', this._stringifyPrettyJSON(_bowerJSON));
     this.copy('bowerrc', '.bowerrc');
     return cb();
   }
@@ -210,7 +210,7 @@ SandboxGenerator.prototype.bower = function bower() {
       }
       if (!--count) {
         // Write to file
-        that.write('bower.json', that._prettyJSON(_bowerJSON));
+        that.write('bower.json', that._stringifyPrettyJSON(_bowerJSON));
         that.copy('bowerrc', '.bowerrc');
         cb();
       }

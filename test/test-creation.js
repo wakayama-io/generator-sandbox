@@ -3,7 +3,7 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('sandbox generator', function () {
+describe('the sandbox generator', function () {
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) {
@@ -18,7 +18,7 @@ describe('sandbox generator', function () {
     }.bind(this));
   });
 
-  it('creates expected project files', function (done) {
+  it('creates expected project files with no extra features', function (done) {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
       basicFeatures : [],
@@ -29,7 +29,13 @@ describe('sandbox generator', function () {
       // Add files you expect to exist here
       '.jshintrc',
       '.editorconfig',
+      '.gitignore',
+      '.gitattributes',
+      'package.json',
       'bower.json',
+      '.bowerrc',
+      'gulpfile.js',
+      'README.md',
       'public/index.html',
       'public/scripts/main.js',
       'public/styles/main.css'
@@ -37,7 +43,9 @@ describe('sandbox generator', function () {
 
     var expectedContent = [
       ['public/index.html', /<title>myapp<\/title>/],
-      ['bower.json', /"name": "myapp"/]
+      ['package.json', /"name": "myapp"/],
+      ['bower.json', /"name": "myapp"/],
+      ['README.md', /myapp/]
     ];
 
     this.app.options['skip-install'] = true;
@@ -48,32 +56,41 @@ describe('sandbox generator', function () {
     });
   });
 
-  it('should generate an angular app', function (done) {
+  it('creates expected files when all features enabled', function (done) {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
-      basicFeatures : ['includeAngular', 'includeLodash', 'includeNormalizeCss', 'includeCsswizardryGrids', 'includeScss'],
-      scssFeatures : ['includeBourbon']
+      basicFeatures : ['includeAngular', 'includeLodash', 'includeNormalizeCss', 'includeScss'],
+      scssFeatures : ['includeCsswizardryGrids', 'includeBourbon']
     });
 
     var expectedFiles = [
       // Add files you expect to exist here
-      '.jshintrc',
-      '.editorconfig',
       'public/index.html',
       'bower.json',
+      '.jshintrc',
+      '.gitignore',
       'public/scripts/main.js',
       'public/styles/scss/main.scss'
     ];
 
     var expectedContent = [
-      ['public/index.html', /<title>myapp<\/title>/],
+      ['public/index.html', /ng-app="myapp"/],
+      ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/lodash\/dist\/lodash.compat.js"><\/script>/],
+      ['public/index.html', /<link rel="stylesheet" href="lib\/normalize.css\/normalize.css">/],
+      ['public/index.html', /<link rel="stylesheet" href="styles\/css\/main.css">/],
       ['bower.json', /"name": "myapp"/],
       ['bower.json', /"angular"/],
       ['bower.json', /"lodash"/],
       ['bower.json', /"normalize.css"/],
       ['bower.json', /"csswizardry-grids"/],
       ['bower.json', /"bourbon"/],
-      ['.jshintrc', /"angular": true/]
+      ['.jshintrc', /"angular": true/],
+      ['.jshintrc', /"_": true/],
+      ['.gitignore', /### Sass ###/],
+      ['.gitignore', /.sass-cache\//],
+      ['public/styles/scss/main.scss', /@import "..\/..\/lib\/csswizardry-grids\/csswizardry-grids";/],
+      ['public/styles/scss/main.scss', /@import "..\/..\/lib\/bourbon\/dist\/bourbon";/]
     ];
 
     this.app.options['skip-install'] = true;
