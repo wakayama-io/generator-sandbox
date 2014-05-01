@@ -57,10 +57,6 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       value: 'includeNormalizeCss',
       checked: false
     }, {
-      name: 'Csswizardry-grids',
-      value: 'includeCsswizardryGrids',
-      checked: false
-    }, {
       name: 'SCSS',
       value: 'includeScss',
       checked: false
@@ -73,6 +69,11 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     name: 'scssFeatures',
     message: 'Which SCSS features would you like to include?',
     choices: [{
+      name: 'Csswizardry-grids',
+      value: 'includeCsswizardryGrids',
+      checked: false
+    },
+    {
       name: 'Bourbon',
       value: 'includeBourbon',
       checked: false

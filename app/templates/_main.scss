@@ -1,1 +1,2 @@
+<% if (includeCsswizardryGrids) { %>@import "../../lib/csswizardry-grids/csswizardry-grids";<% } %>
 <% if (includeBourbon) { %>@import "../../lib/bourbon/dist/bourbon";<% } %>
