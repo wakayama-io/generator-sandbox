@@ -3,6 +3,7 @@
 var gulp = require('gulp'),<% if (includeScss) { %>
     sass = require('gulp-ruby-sass'),<% } %>
     jshint = require('gulp-jshint'),
+    jscs = require('gulp-jscs'),
     open = require('gulp-open'),
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),

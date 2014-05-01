@@ -134,6 +134,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('gulp-ruby-sass');
   }
   npmList.push('gulp-jshint');
+  npmList.push('gulp-jscs');
   npmList.push('gulp-open');
   npmList.push('gulp-livereload');
   npmList.push('gulp-notify-growl');
