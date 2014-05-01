@@ -7,7 +7,7 @@
 ## Features
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
-* [SCSS](http://sass-lang.com/)
+* [Scss](http://sass-lang.com/)
 * [Normalize.scss](https://github.com/hail2u/normalize.scss)
 * [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
 * [Bourbon](http://bourbon.io/)
@@ -24,6 +24,7 @@
 * [Yeoman](http://yeoman.io/)
 * [Bower](http://bower.io/)
 * [Gulp.js](http://gulpjs.com/)
+* [Sass < 3.3.x](http://sass-lang.com/install)
 
 ## Getting Started
 To install generator-sandbox from npm, run:
