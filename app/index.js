@@ -139,7 +139,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('gulp-open');
   npmList.push('gulp-livereload');
   npmList.push('gulp-notify-growl');
-  npmList.push('gulp-connect');
+  npmList.push('connect');
   npmList.push('wiredep');
 
   var count = npmList.length;
