@@ -50,6 +50,7 @@ describe('the sandbox generator', function () {
     ];
 
     this.app.options['skip-install'] = true;
+    this.timeout(5000);
     this.app.run({}, function () {
       helpers.assertFile(expectedFiles);
       helpers.assertFileContent(expectedContent);
