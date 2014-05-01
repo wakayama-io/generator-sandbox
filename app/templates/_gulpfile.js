@@ -22,7 +22,8 @@ gulp.task('styles', function () {
 gulp.task('scripts', function () {
   return gulp.src('./public/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('default'))
+    .pipe(jscs())
+    .pipe(jshint.reporter('jshint-stylish'))
     .pipe(notify({
       title: 'Done.',
       message: 'Scripts task complete'

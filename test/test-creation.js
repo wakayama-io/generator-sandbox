@@ -28,6 +28,7 @@ describe('the sandbox generator', function () {
     var expectedFiles = [
       // Add files you expect to exist here
       '.jshintrc',
+      '.jscs.json',
       '.editorconfig',
       '.gitignore',
       '.gitattributes',

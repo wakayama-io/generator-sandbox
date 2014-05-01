@@ -222,6 +222,10 @@ SandboxGenerator.prototype.jsHint = function jsHint() {
   this.template('jshintrc', '.jshintrc');
 };
 
+SandboxGenerator.prototype.jscsJson = function jscsJson() {
+  this.copy('jscs.json', '.jscs.json');
+};
+
 SandboxGenerator.prototype.editorConfig = function editorConfig() {
   this.copy('editorconfig', '.editorconfig');
 };
