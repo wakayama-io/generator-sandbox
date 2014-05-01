@@ -22,16 +22,16 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "bower-latest": "^1.1.0",
     "chalk": "~0.4.0",
-    "yeoman-generator": "~0.16.0",
     "lodash": "^2.4.1",
     "npm-latest": "^0.2.0",
-    "bower-latest": "^1.1.0"
+    "yeoman-generator": "~0.16.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "coveralls": "~2.10.0",
-    "gulp": "~3.5.2",
+    "gulp": "^3.6.2",
     "gulp-istanbul": "~0.1.1",
     "gulp-jscs": "~0.3.0",
     "gulp-jshint": "~1.4.0",
