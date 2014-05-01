@@ -25,7 +25,7 @@ gulp.task('istanbul', function (cb) {
     .on('end', function () {
       gulp.src(paths.tests)
         .pipe(mocha())
-        .pipe(istanbul.writeReports()) // Creating the reports after tests runned
+        .pipe(istanbul.writeReports()) // Creating the reports after tests run
         .on('end', cb);
     });
 });

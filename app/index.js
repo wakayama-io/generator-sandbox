@@ -11,7 +11,10 @@ var bowerLatest = require('bower-latest');
 var SandboxGenerator =  module.exports = function SandboxGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.options = options;
+  this.options = {
+    reqTimeout : 15000
+  };
+  _.merge(this.options, options);
 
   this.on('end', function () {
     this.installDependencies({ skipInstall: options['skip-install'] });
@@ -142,8 +145,9 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     return cb();
   }
 
+  var that = this;
   _.each(npmList, function (packageName) {
-    npmLatest(packageName, {timeout: 1900}, function (err, result) {
+    npmLatest(packageName, {timeout: that.options.reqTimeout}, function (err, result) {
       if (!err && result.name && result.version) {
         _packageJSON.devDependencies[result.name] = result.version;
       } else {
@@ -152,7 +156,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
       }
       if (!--count) {
         // Write to file
-        this.write('package.json', this._prettyJSON(_packageJSON.devDependencies));
+        this.write('package.json', this._prettyJSON(_packageJSON));
         cb();
       }
     }.bind(this));
@@ -196,7 +200,7 @@ SandboxGenerator.prototype.bower = function bower() {
 
   var that = this;
   _.each(bowerList, function (packageName) {
-    bowerLatest(packageName, function (result) {
+    bowerLatest(packageName, {timeout: that.options.reqTimeout}, function (result) {
       if (result && result.name && result.version) {
         _bowerJSON.dependencies[result.name] = result.version;
       } else {

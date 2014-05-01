@@ -49,7 +49,6 @@ describe('sandbox generator', function () {
   });
 
   it('should generate an angular app', function (done) {
-    this.timeout(15000);
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
       basicFeatures : ['includeAngular', 'includeLodash', 'includeNormalizeCss', 'includeCsswizardryGrids', 'includeScss'],
@@ -78,7 +77,7 @@ describe('sandbox generator', function () {
     ];
 
     this.app.options['skip-install'] = true;
-
+    this.timeout(15000);
     this.app.run({}, function () {
       helpers.assertFile(expectedFiles);
       helpers.assertFileContent(expectedContent);
