@@ -9,15 +9,15 @@ var gulp = require('gulp'),<% if (includeScss) { %>
     notify = growl(),
     wiredep = require('wiredep').stream;<% if (includeScss) { %>
 
-  gulp.task('styles', function () {
-    return gulp.src('./public/styles/scss/*.scss')
-      .pipe(sass())
-      .pipe(gulp.dest('./public/styles/css'))
-      .pipe(notify({
-        title: 'Done.',
-        message: 'Styles task complete'
-      }));
-  });<% } %>
+gulp.task('styles', function () {
+  return gulp.src('./public/styles/scss/*.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./public/styles/css'))
+    .pipe(notify({
+      title: 'Done.',
+      message: 'Styles task complete'
+    }));
+});<% } %>
 
 gulp.task('scripts', function () {
   return gulp.src('./public/scripts/**/*.js')
