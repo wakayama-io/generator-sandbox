@@ -219,22 +219,22 @@ SandboxGenerator.prototype.bower = function bower() {
 SandboxGenerator.prototype.wireDep = function wireDep() {
   var scriptExcludes = [];
   if (this.includeAngular === true) {
-    scriptExcludes.push('\'angular\'');
+    scriptExcludes.push(/angular/);
   }
   if (this.includeLodash === true) {
-    scriptExcludes.push('\'lodash\'');
+    scriptExcludes.push(/lodash/);
   }
   this.wiredepScriptExcludes = scriptExcludes.join(', ');
 
   var scssExcludes = [];
   if (this.includeNormalizeScss === true) {
-    scssExcludes.push('\'modularized-normalize-scss\'');
+    scssExcludes.push(/modularized-normalize-scss/);
   }
   if (this.includeCsswizardryGrids === true) {
-    scssExcludes.push('\'csswizardry-grids\'');
+    scssExcludes.push(/csswizardry-grids/);
   }
   if (this.includeBourbon === true) {
-    scssExcludes.push('\'bourbon\'');
+    scssExcludes.push(/bourbon/);
   }
   this.wiredepScssExcludes = scssExcludes.join(', ');
 };
