@@ -82,13 +82,14 @@ describe('the sandbox generator', function () {
       ['bower.json', /"name": "myapp"/],
       ['bower.json', /"angular"/],
       ['bower.json', /"lodash"/],
-      ['bower.json', /"normalize.scss"/],
+      ['bower.json', /"modularized-normalize-scss"/],
       ['bower.json', /"csswizardry-grids"/],
       ['bower.json', /"bourbon"/],
       ['.jshintrc', /"angular": true/],
       ['.jshintrc', /"_": true/],
       ['.gitignore', /### Sass ###/],
       ['.gitignore', /.sass-cache\//],
+      ['public/styles/scss/main.scss', /@import "..\/..\/lib\/modularized-normalize-scss\/normalize";/],
       ['public/styles/scss/main.scss', /@import "..\/..\/lib\/csswizardry-grids\/csswizardry-grids";/],
       ['public/styles/scss/main.scss', /@import "..\/..\/lib\/bourbon\/dist\/bourbon";/]
     ];

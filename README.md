@@ -8,7 +8,7 @@
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
 * [SCSS](http://sass-lang.com/)
-* [Normalize.scss](https://github.com/JohnAlbin/normalize-scss)
+* [Normalize.scss](https://github.com/hail2u/normalize.scss)
 * [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
 * [Bourbon](http://bourbon.io/)
 * [Gulp](http://gulpjs.com/)

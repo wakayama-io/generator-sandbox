@@ -1,3 +1,3 @@
-<% if (includeNormalizeScss) { %>@import "../../lib/normalize.scss/normalize"><% } %>
+<% if (includeNormalizeScss) { %>@import "../../lib/modularized-normalize-scss/normalize";<% } %>
 <% if (includeCsswizardryGrids) { %>@import "../../lib/csswizardry-grids/csswizardry-grids";<% } %>
 <% if (includeBourbon) { %>@import "../../lib/bourbon/dist/bourbon";<% } %>

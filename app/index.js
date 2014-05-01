@@ -184,7 +184,7 @@ SandboxGenerator.prototype.bower = function bower() {
     bowerList.push('lodash');
   }
   if (this.includeNormalizeScss === true) {
-    bowerList.push('normalize.scss');
+    bowerList.push('modularized-normalize-scss');
   }
   if (this.includeCsswizardryGrids === true) {
     bowerList.push('csswizardry-grids');
