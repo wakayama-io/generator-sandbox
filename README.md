@@ -14,7 +14,7 @@
 * [Wiredep](https://github.com/taptapship/wiredep)
 
 ## Optional
-* [AngularJS](https://angularjs.org/), compatible with [generator-angular](https://github.com/yeoman/generator-angular)
+* [AngularJS](https://angularjs.org/), compatible with sub-generators of [generator-angular](https://github.com/yeoman/generator-angular)
 * [Lo-Dash](http://lodash.com/)
 * [Scss](http://sass-lang.com/)
 * [Inuit.css](https://github.com/csswizardry/inuit.css/)
@@ -42,6 +42,23 @@ npm install -g generator-sandbox
 ## Options
 * `--skip-install`
   Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
+
+## Sub-Generators
+Available sub-generators from [generator-angular](https://github.com/yeoman/generator-angular)
+
+* angular:controller
+* angular:directive
+* angular:filter
+* angular:route
+* angular:service
+* angular:provider
+* angular:factory
+* angular:value
+* angular:constant
+* angular:decorator
+* angular:view
+
+**Note: Generators are to be run from the root directory of your app.**
 
 ## License
 [BSD license](http://opensource.org/licenses/bsd-license.php)
