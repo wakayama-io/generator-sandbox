@@ -105,7 +105,7 @@ SandboxGenerator.prototype.app = function app() {
   this.mkdir('public/styles');
 
   this.template('_index.html', 'public/index.html');
-  this.template('_main.js', 'public/scripts/main.js');
+  this.template('_app.js', 'public/scripts/app.js');
 
   if (this.includeScss) {
     this.mkdir('public/styles/css');
@@ -138,6 +138,9 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('gulp-notify-growl');
   npmList.push('connect');
   npmList.push('wiredep');
+  if (this.includeAngular === true) {
+    npmList.push('generator-angular');
+  }
 
   var count = npmList.length;
 
@@ -171,6 +174,11 @@ SandboxGenerator.prototype.bower = function bower() {
   // Generate bower.json
   var _bowerJSON = require(path.join(__dirname + '/templates/_bower.json'));
   _bowerJSON.name = this.appName;
+
+  if (this.includeAngular === true) {
+    _bowerJSON.appPath = 'public';
+    _bowerJSON.testPath = 'test/client/specs';
+  }
 
   var bowerList = [];
   // Add dependencies
@@ -228,14 +236,14 @@ SandboxGenerator.prototype.wireDep = function wireDep() {
   this.wiredepScriptExcludes = scriptExcludes.join(', ');
 
   var scssExcludes = [];
+  if (this.includeInuitCss === true) {
+    scssExcludes.push(/inuit.css/);
+  }
   if (this.includeNormalizeScss === true) {
     scssExcludes.push(/modularized-normalize-scss/);
   }
   if (this.includeCsswizardryGrids === true) {
     scssExcludes.push(/csswizardry-grids/);
-  }
-  if (this.includeInuitCss === true) {
-    scssExcludes.push(/inuit.css/);
   }
   this.wiredepScssExcludes = scssExcludes.join(', ');
 };

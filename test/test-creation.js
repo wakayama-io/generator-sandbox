@@ -38,7 +38,7 @@ describe('the sandbox generator', function () {
       'gulpfile.js',
       'README.md',
       'public/index.html',
-      'public/scripts/main.js',
+      'public/scripts/app.js',
       'public/styles/main.css'
     ];
 
@@ -71,7 +71,7 @@ describe('the sandbox generator', function () {
       'bower.json',
       '.jshintrc',
       '.gitignore',
-      'public/scripts/main.js',
+      'public/scripts/app.js',
       'public/styles/scss/main.scss'
     ];
 

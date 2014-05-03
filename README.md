@@ -14,7 +14,7 @@
 * [Wiredep](https://github.com/taptapship/wiredep)
 
 ## Optional
-* [AngularJS](https://angularjs.org/)
+* [AngularJS](https://angularjs.org/), compatible with [generator-angular](https://github.com/yeoman/generator-angular)
 * [Lo-Dash](http://lodash.com/)
 * [Scss](http://sass-lang.com/)
 * [Inuit.css](https://github.com/csswizardry/inuit.css/)
