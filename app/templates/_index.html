@@ -2,16 +2,23 @@
 <html lang="en" <% if (includeAngular) { %>ng-app="<%= appName %>"<% } %>>
 <head>
   <meta charset="UTF-8">
-  <title><%= appName %></title><% if (!includeScss) { %>
+  <title><%= appName %></title>
+  <!-- build:css styles/main.min.css --><% if (!includeScss) { %>
   <!-- bower:css -->
   <!-- endbower --><% } %>
   <link rel="stylesheet" href="styles/<% if (includeScss) { %>css/<% } %>main.css">
+  <!-- endbuild -->
 </head>
 <body>
+  <!-- build:js scripts/lib.min.js -->
   <!-- bower:js -->
   <!-- endbower --><% if (includeAngular) { %>
   <script src="lib/angular/angular.js"></script><% }%><% if (includeLodash) { %>
   <script src="lib/lodash/dist/lodash.compat.js"></script><% }%>
+  <!-- endbuild -->
+
+  <!-- build:js scripts/app.min.js -->
   <script src="scripts/app.js"></script>
+  <!-- endbuild -->
 </body>
 </html>
