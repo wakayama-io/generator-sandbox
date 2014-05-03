@@ -25,7 +25,6 @@
 * [Node.js](http://nodejs.org/)
 * [Yeoman](http://yeoman.io/)
 * [Bower](http://bower.io/)
-* [Gulp.js](http://gulpjs.com/)
 * [Sass >= 3.3.x](http://sass-lang.com/install)
 
 ## Getting Started
