@@ -17,9 +17,9 @@
 * [AngularJS](https://angularjs.org/)
 * [Lo-Dash](http://lodash.com/)
 * [Scss](http://sass-lang.com/)
+* [Inuit.css](https://github.com/csswizardry/inuit.css/)
 * [Normalize.scss](https://github.com/hail2u/normalize.scss)
 * [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
-* [Bourbon](http://bourbon.io/)
 
 ## Dependencies
 * [Node.js](http://nodejs.org/)

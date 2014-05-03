@@ -1,3 +1,3 @@
-'use strict';
+'use strict';<% if (includeAngular) { %>
 
-<% if (includeAngular) { %>angular.module('<%= appName %>', []);<% } %>
+angular.module('<%= appName %>', []);<% } %>

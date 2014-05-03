@@ -65,17 +65,18 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     name: 'scssFeatures',
     message: 'Which SCSS features would you like to include?',
     choices: [{
+      name: 'Inuit.css',
+      value: 'includeInuitCss',
+      checked: false
+    },
+      new yeoman.inquirer.Separator(),
+    {
       name: 'Normalize.scss',
       value: 'includeNormalizeScss',
       checked: false
     }, {
       name: 'Csswizardry-grids',
       value: 'includeCsswizardryGrids',
-      checked: false
-    },
-    {
-      name: 'Bourbon',
-      value: 'includeBourbon',
       checked: false
     }]
   }];
@@ -90,9 +91,9 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.includeAngular = hasFeature('includeAngular');
     this.includeLodash = hasFeature('includeLodash');
     this.includeScss = hasFeature('includeScss');
+    this.includeInuitCss = hasFeature('includeInuitCss');
     this.includeNormalizeScss = hasFeature('includeNormalizeScss');
     this.includeCsswizardryGrids = hasFeature('includeCsswizardryGrids');
-    this.includeBourbon = hasFeature('includeBourbon');
 
     done();
   }.bind(this));
@@ -185,8 +186,8 @@ SandboxGenerator.prototype.bower = function bower() {
   if (this.includeCsswizardryGrids === true) {
     bowerList.push('csswizardry-grids');
   }
-  if (this.includeBourbon === true) {
-    bowerList.push('bourbon');
+  if (this.includeInuitCss === true) {
+    bowerList.push('inuit.css');
   }
 
   var count = bowerList.length;
@@ -233,8 +234,8 @@ SandboxGenerator.prototype.wireDep = function wireDep() {
   if (this.includeCsswizardryGrids === true) {
     scssExcludes.push(/csswizardry-grids/);
   }
-  if (this.includeBourbon === true) {
-    scssExcludes.push(/bourbon/);
+  if (this.includeInuitCss === true) {
+    scssExcludes.push(/inuit.css/);
   }
   this.wiredepScssExcludes = scssExcludes.join(', ');
 };
