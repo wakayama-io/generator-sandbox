@@ -1,3 +1,3 @@
 'use strict';<% if (includeAngular) { %>
 
-angular.module('<%= appName %>', []);<% } %>
+angular.module('<%= camelName %>', []);<% } %>

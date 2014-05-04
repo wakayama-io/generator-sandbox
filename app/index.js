@@ -84,8 +84,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
   }];
 
   this.prompt(prompts, function (answers) {
-    this.appName = answers.appName;
-    this.slugName = this._.slugify(answers.appName);
+    this.appName = this._.trim(answers.appName);
+    this.slugName = this._.slugify(this.appName);
+    this.camelName = this._.camelize(this.appName);
+
     var features = answers.basicFeatures.concat(answers.scssFeatures);
 
     function hasFeature(feat) {
