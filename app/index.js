@@ -29,8 +29,10 @@ SandboxGenerator.prototype._stringifyPrettyJSON = function _stringifyPrettyJSON(
 
 // Welcome message
 SandboxGenerator.prototype.welcome = function welcome() {
-  this.log(this.yeoman);
-  this.log(chalk.magenta('Welcome to the Sandbox generator.'));
+  if (!this.options['skip-welcome-message']) {
+    this.log(this.yeoman);
+    this.log(chalk.magenta('Welcome to the Sandbox generator.'));
+  }
 };
 
 SandboxGenerator.prototype.promptUser = function promptUser() {
@@ -83,6 +85,7 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
 
   this.prompt(prompts, function (answers) {
     this.appName = answers.appName;
+    this.slugName = this._.slugify(answers.appName);
     var features = answers.basicFeatures.concat(answers.scssFeatures);
 
     function hasFeature(feat) {
@@ -121,7 +124,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
 
   // Generate package.json
   var _packageJSON = require(path.join(__dirname + '/templates/_package.json'));
-  _packageJSON.name = this.appName;
+  _packageJSON.name = this.slugName;
 
   var npmList = [];
 
@@ -173,7 +176,7 @@ SandboxGenerator.prototype.bower = function bower() {
 
   // Generate bower.json
   var _bowerJSON = require(path.join(__dirname + '/templates/_bower.json'));
-  _bowerJSON.name = this.appName;
+  _bowerJSON.name = this.slugName;
 
   if (this.includeAngular === true) {
     _bowerJSON.appPath = 'public';

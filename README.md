@@ -41,6 +41,8 @@ npm install -g generator-sandbox
 ## Options
 * `--skip-install`
   Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
+* `--skip-welcome-message`
+  Skips the welcome message.
 
 ## Sub-Generators
 Available sub-generators from [generator-angular](https://github.com/yeoman/generator-angular)
