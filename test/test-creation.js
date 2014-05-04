@@ -22,6 +22,7 @@ describe('the sandbox generator', function () {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
       basicFeatures : [],
+      angularFeatures: [],
       scssFeatures : []
     });
 
@@ -62,7 +63,8 @@ describe('the sandbox generator', function () {
     helpers.mockPrompt(this.app, {
       appName: 'myapp',
       basicFeatures : ['includeAngular', 'includeLodash', 'includeScss'],
-      scssFeatures : [,'includeInuitCss','includeNormalizeScss', 'includeCsswizardryGrids']
+      angularFeatures: ['includeAngularResource', 'includeAngularCookies', 'includeAngularSanitize', 'includeAngularRoute', 'includeAngularUiRouter'],
+      scssFeatures : [,'includeInuitCss', 'includeNormalizeScss', 'includeCsswizardryGrids']
     });
 
     var expectedFiles = [
@@ -78,12 +80,23 @@ describe('the sandbox generator', function () {
     var expectedContent = [
       ['public/index.html', /ng-app="myapp"/],
       ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular-resource\/angular-resource.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular-cookies\/angular-cookies.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular-sanitize\/angular-sanitize.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular-route\/angular-route.js"><\/script>/],
+      ['public/index.html', /<script src="lib\/angular-ui-router\/release\/angular-ui-router.js"><\/script>/],
       ['public/index.html', /<script src="lib\/lodash\/dist\/lodash.compat.js"><\/script>/],
       ['public/index.html', /<link rel="stylesheet" href="styles\/css\/main.css">/],
       ['bower.json', /"name": "myapp"/],
       ['bower.json', /"angular"/],
       ['bower.json', /"angular-mocks"/],
       ['bower.json', /"angular-scenario"/],
+      ['bower.json', /"angular-resource"/],
+      ['bower.json', /"angular-cookies"/],
+      ['bower.json', /"angular-sanitize"/],
+      ['bower.json', /"angular-route"/],
+      ['bower.json', /"angular-ui-router"/],
       ['bower.json', /"lodash"/],
       ['bower.json', /"inuit.css"/],
       ['bower.json', /"modularized-normalize-scss"/],
