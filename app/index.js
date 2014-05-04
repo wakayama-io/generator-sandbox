@@ -61,6 +61,34 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     }]
   }, {
     when: function (answers) {
+      return answers.basicFeatures.indexOf('includeAngular') !== -1;
+    },
+    type: 'checkbox',
+    name: 'angularFeatures',
+    message: 'Which Angular features would you like to include?',
+    choices: [{
+      name: 'angular-resource.js',
+      value: 'includeAngularResource',
+      checked: false
+    }, {
+      name: 'angular-cookies.js',
+      value: 'includeAngularCookies',
+      checked: false
+    }, {
+      name: 'angular-sanitize.js',
+      value: 'includeAngularSanitize',
+      checked: false
+    }, {
+      name: 'angular-route.js',
+      value: 'includeAngularRoute',
+      checked: false
+    }, {
+      name: 'angular-ui-route.js',
+      value: 'includeAngularUiRouter',
+      checked: false
+    }]
+  }, {
+    when: function (answers) {
       return answers.basicFeatures.indexOf('includeScss') !== -1;
     },
     type: 'checkbox',
@@ -88,12 +116,17 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.slugName = this._.slugify(this.appName);
     this.camelName = this._.camelize(this.appName);
 
-    var features = answers.basicFeatures.concat(answers.scssFeatures);
+    var features = answers.basicFeatures.concat(answers.angularFeatures).concat(answers.scssFeatures);
 
     function hasFeature(feat) {
       return features.indexOf(feat) !== -1;
     }
     this.includeAngular = hasFeature('includeAngular');
+    this.includeAngularResource = hasFeature('includeAngularResource');
+    this.includeAngularCookies = hasFeature('includeAngularCookies');
+    this.includeAngularSanitize = hasFeature('includeAngularSanitize');
+    this.includeAngularRoute = hasFeature('includeAngularRoute');
+    this.includeAngularUiRouter = hasFeature('includeAngularUiRouter');
     this.includeLodash = hasFeature('includeLodash');
     this.includeScss = hasFeature('includeScss');
     this.includeInuitCss = hasFeature('includeInuitCss');
@@ -193,6 +226,21 @@ SandboxGenerator.prototype.bower = function bower() {
     bowerDependencies.push('angular');
     bowerDevDependencies.push('angular-mocks');
     bowerDevDependencies.push('angular-scenario');
+    if (this.includeAngularResource === true) {
+      bowerDependencies.push('angular-resource');
+    }
+    if (this.includeAngularCookies === true) {
+      bowerDependencies.push('angular-cookies');
+    }
+    if (this.includeAngularSanitize === true) {
+      bowerDependencies.push('angular-sanitize');
+    }
+    if (this.includeAngularRoute === true) {
+      bowerDependencies.push('angular-route');
+    }
+    if (this.includeAngularUiRouter === true) {
+      bowerDependencies.push('angular-ui-router');
+    }
   }
   if (this.includeLodash === true) {
     bowerDependencies.push('lodash');
@@ -220,14 +268,14 @@ SandboxGenerator.prototype.bower = function bower() {
   _.each(bowerList, function (packageName) {
     bowerLatest(packageName, {timeout: that.options.reqTimeout}, function (result) {
       if (result && result.name && result.version) {
-        if (bowerDependencies.indexOf(packageName) > -1) {
+        if (bowerDependencies.indexOf(packageName) !== -1) {
           _bowerJSON.dependencies[result.name] = result.version;
         } else {
           _bowerJSON.devDependencies[result.name] = result.version;
         }
       } else {
         // take the latest
-        if (bowerDependencies.indexOf(packageName) > -1) {
+        if (bowerDependencies.indexOf(packageName) !== -1) {
           _bowerJSON.dependencies[packageName] = '*';
         } else {
           _bowerJSON.devDependencies[packageName] = '*';
@@ -246,22 +294,22 @@ SandboxGenerator.prototype.bower = function bower() {
 SandboxGenerator.prototype.wireDep = function wireDep() {
   var scriptExcludes = [];
   if (this.includeAngular === true) {
-    scriptExcludes.push(/angular/);
+    scriptExcludes.push(/angular\//);
   }
   if (this.includeLodash === true) {
-    scriptExcludes.push(/lodash/);
+    scriptExcludes.push(/lodash\//);
   }
   this.wiredepScriptExcludes = scriptExcludes.join(', ');
 
   var scssExcludes = [];
   if (this.includeInuitCss === true) {
-    scssExcludes.push(/inuit.css/);
+    scssExcludes.push(/inuit.css\//);
   }
   if (this.includeNormalizeScss === true) {
-    scssExcludes.push(/modularized-normalize-scss/);
+    scssExcludes.push(/modularized-normalize-scss\//);
   }
   if (this.includeCsswizardryGrids === true) {
-    scssExcludes.push(/csswizardry-grids/);
+    scssExcludes.push(/csswizardry-grids\//);
   }
   this.wiredepScssExcludes = scssExcludes.join(', ');
 };

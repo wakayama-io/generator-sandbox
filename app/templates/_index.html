@@ -10,11 +10,16 @@
   <!-- endbuild -->
 </head>
 <body>
-  <!-- build:js scripts/lib.min.js -->
-  <!-- bower:js -->
-  <!-- endbower --><% if (includeAngular) { %>
-  <script src="lib/angular/angular.js"></script><% }%><% if (includeLodash) { %>
+  <!-- build:js scripts/lib.min.js --><% if (includeAngular) { %>
+  <script src="lib/angular/angular.js"></script><% }%><% if (includeAngularResource) { %>
+  <script src="lib/angular-resource/angular-resource.js"></script><% }%><% if (includeAngularCookies) { %>
+  <script src="lib/angular-cookies/angular-cookies.js"></script><% }%><% if (includeAngularSanitize) { %>
+  <script src="lib/angular-sanitize/angular-sanitize.js"></script><% }%><% if (includeAngularRoute) { %>
+  <script src="lib/angular-route/angular-route.js"></script><% }%><% if (includeAngularUiRouter) { %>
+  <script src="lib/angular-ui-router/release/angular-ui-router.js"></script><% }%><% if (includeLodash) { %>
   <script src="lib/lodash/dist/lodash.compat.js"></script><% }%>
+  <!-- bower:js -->
+  <!-- endbower -->
   <!-- endbuild -->
 
   <!-- build:js scripts/app.min.js -->
