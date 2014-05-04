@@ -189,6 +189,8 @@ SandboxGenerator.prototype.bower = function bower() {
   // Add dependencies
   if (this.includeAngular === true) {
     bowerList.push('angular');
+    bowerList.push('angular-mocks');
+    bowerList.push('angular-scenario');
   }
   if (this.includeLodash === true) {
     bowerList.push('lodash');

@@ -82,6 +82,8 @@ describe('the sandbox generator', function () {
       ['public/index.html', /<link rel="stylesheet" href="styles\/css\/main.css">/],
       ['bower.json', /"name": "myapp"/],
       ['bower.json', /"angular"/],
+      ['bower.json', /"angular-mocks"/],
+      ['bower.json', /"angular-scenario"/],
       ['bower.json', /"lodash"/],
       ['bower.json', /"inuit.css"/],
       ['bower.json', /"modularized-normalize-scss"/],
