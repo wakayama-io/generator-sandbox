@@ -15,6 +15,12 @@
 
 ## Optional
 * [AngularJS](https://angularjs.org/), compatible with sub-generators of [generator-angular](https://github.com/yeoman/generator-angular)
+* [Angular-cookies](https://docs.angularjs.org/api/ngCookies)
+* [Angular-loader](http://docs.angularjs.org/guide/bootstrap)
+* [Angular-resource](https://docs.angularjs.org/api/ngResource)
+* [Angular-sanitize](https://docs.angularjs.org/api/ngSanitize)
+* [Angular-route](https://docs.angularjs.org/api/ngRoute)
+* [Angular-ui-router](https://github.com/angular-ui/ui-router)
 * [Lo-Dash](http://lodash.com/)
 * [Scss](http://sass-lang.com/)
 * [Inuit.css](https://github.com/csswizardry/inuit.css/)
