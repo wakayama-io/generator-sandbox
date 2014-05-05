@@ -11,29 +11,9 @@ var path = require('path');
 
 var paths = {
   lint: ['gulpfile.js', 'app/index.js'],
-  tests: ['test/**/*.js', '!test/temp/**'],
+  tests: ['./test/**/*.js', '!test/{temp,temp/**}'],
   source: ['app/index.js']
 };
-
-function joinPath(source) {
-  if (_.isArray(source)) {
-    var temp = [];
-    _.each(source, function (item) {
-      temp.push(joinPath(item));
-    });
-    return temp;
-  } else {
-    if (source.indexOf('!') === 0) {
-      return '!' + path.join(__dirname, source.slice(1));
-    } else {
-      return path.join(__dirname, source);
-    }
-  }
-}
-
-_.each(paths, function (sources, key, list) {
-  list[key] = joinPath(sources);
-});
 
 gulp.task('lint', function () {
   return gulp.src(paths.lint)
@@ -46,7 +26,7 @@ gulp.task('istanbul', function (cb) {
   gulp.src(paths.source)
     .pipe(istanbul()) // Covering files
     .on('end', function () {
-      gulp.src(paths.tests)
+      gulp.src(paths.tests, {cwd: __dirname})
         .pipe(mocha())
         .pipe(istanbul.writeReports()) // Creating the reports after tests run
         .on('end', cb);
