@@ -194,12 +194,13 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   var that = this;
   _.each(npmList, function (packageName) {
     npmLatest(packageName, {timeout: that.options.reqTimeout}, function (err, result) {
+      var name = packageName;
+      var version = '*';
       if (!err && result.name && result.version) {
-        _packageJSON.devDependencies[result.name] = result.version;
-      } else {
-        // take the latest
-        _packageJSON.devDependencies[packageName] = '*';
+        name = result.name;
+        version = result.version;
       }
+      _packageJSON.devDependencies[name] = version;
       if (!--count) {
         // Write to file
         this.write('package.json', this._stringifyPrettyJSON(_packageJSON));
@@ -272,19 +273,16 @@ SandboxGenerator.prototype.bower = function bower() {
   var that = this;
   _.each(bowerList, function (packageName) {
     bowerLatest(packageName, {timeout: that.options.reqTimeout}, function (result) {
+      var name = packageName;
+      var version = '*';
       if (result && result.name && result.version) {
-        if (bowerDependencies.indexOf(packageName) !== -1) {
-          _bowerJSON.dependencies[result.name] = result.version;
-        } else {
-          _bowerJSON.devDependencies[result.name] = result.version;
-        }
+        name = result.name;
+        version = result.version;
+      }
+      if (bowerDependencies.indexOf(packageName) !== -1) {
+        _bowerJSON.dependencies[name] = version;
       } else {
-        // take the latest
-        if (bowerDependencies.indexOf(packageName) !== -1) {
-          _bowerJSON.dependencies[packageName] = '*';
-        } else {
-          _bowerJSON.devDependencies[packageName] = '*';
-        }
+        _bowerJSON.devDependencies[name] = version;
       }
       if (!--count) {
         // Write to file
