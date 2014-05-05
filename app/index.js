@@ -178,6 +178,11 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('wiredep');
   if (this.includeAngular === true) {
     npmList.push('generator-angular');
+    npmList.push('karma');
+    npmList.push('karma-jasmine');
+    npmList.push('karma-chrome-launcher');
+    npmList.push('gulp-util');
+    npmList.push('lodash');
   }
 
   var count = npmList.length;

@@ -118,4 +118,25 @@ describe('the sandbox generator', function () {
       done();
     });
   });
+
+  it('creates karma test files when angular enabled', function (done) {
+    helpers.mockPrompt(this.app, {
+      basicFeatures : ['includeAngular']
+    });
+
+    var expectedContent = [
+      ['package.json', /"karma"/],
+      ['package.json', /"karma-jasmine"/],
+      ['package.json', /"karma-chrome-launcher"/],
+      ['package.json', /"gulp-util"/],
+      ['package.json', /"lodash"/]
+    ];
+
+    this.app.options['skip-install'] = true;
+    this.timeout(15000);
+    this.app.run({}, function () {
+      helpers.assertFileContent(expectedContent);
+      done();
+    });
+  });
 });
