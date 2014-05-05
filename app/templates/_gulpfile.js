@@ -8,8 +8,45 @@ var gulp = require('gulp'),<% if (includeScss) { %>
     open = require('gulp-open'),
     livereload = require('gulp-livereload'),
     growl = require('gulp-notify-growl'),
-    notify = growl(),
-    wiredep = require('wiredep').stream;<% if (includeScss) { %>
+    notify = growl(),<% if (includeAngular) { %>
+    karma = require('karma').server,
+    gutil = require('gulp-util'),
+    _ = require('lodash'),<% } %>
+    wiredep = require('wiredep').stream;<% if (includeAngular) { %>
+
+// one could also externalize common config into a separate file,
+// ex.: var karmaCommonConf = require('./karma-common-conf.js');
+var karmaCommonConf = {
+  browsers: ['Chrome'],
+  frameworks: ['jasmine'],
+  files: [
+    './public/lib/angular/angular.js',
+    './public/lib/angular-mocks/angular-mocks.js',
+    './public/scripts/**/*.js',
+    './test/**/*.js'
+  ]
+};
+
+// flag to determine if we have to exit the process or not
+// it's true while watching
+var watching = false;
+
+// a helper function to report karma's exit status
+function karmaExit(exitCode) {
+  gutil.log('Karma has exited with ' + exitCode);
+
+  // do not kill process when watching
+  if (!watching) {
+    process.exit(exitCode);
+  }
+}
+
+/**
+ * Run test once and exit
+ */
+gulp.task('test', function () {
+  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), karmaExit);
+});<% } %><% if (includeScss) { %>
 
 gulp.task('styles', function () {
   return gulp.src('./public/styles/scss/*.scss')
@@ -80,7 +117,11 @@ gulp.task('watch', function () {<% if (includeScss) { %>
   // // Watch any files, reload on change
   gulp.watch(['./**', '!./node_modules/**', '!./public/lib/**']).on('change', function (file) {
     server.changed(file.path);
-  });
+  });<% if (includeAngular) { %>
+
+  watching = true;
+  gulp.run('test');
+  gulp.watch(['./public/scripts/**/*.js', './test/**/*.js', 'gulpfile.js'], ['test']);<% } %>
 });
 
 gulp.task('default', function () {

@@ -119,24 +119,50 @@ describe('the sandbox generator', function () {
     });
   });
 
-  it('creates karma test files when angular enabled', function (done) {
-    helpers.mockPrompt(this.app, {
-      basicFeatures : ['includeAngular']
+  describe('angular karma tests', function () {
+
+    this.timeout(15000);
+
+    it('creates karma test files when angular enabled', function (done) {
+      helpers.mockPrompt(this.app, {
+        appName: 'myapp',
+        basicFeatures : ['includeAngular']
+      });
+
+      var expectedContent = [
+        ['package.json', /"karma"/],
+        ['package.json', /"karma-jasmine"/],
+        ['package.json', /"karma-chrome-launcher"/],
+        ['package.json', /"gulp-util"/],
+        ['package.json', /"lodash"/]
+      ];
+
+      this.app.options['skip-install'] = true;
+      this.app.run({}, function () {
+        helpers.assertFileContent(expectedContent);
+        done();
+      });
     });
 
-    var expectedContent = [
-      ['package.json', /"karma"/],
-      ['package.json', /"karma-jasmine"/],
-      ['package.json', /"karma-chrome-launcher"/],
-      ['package.json', /"gulp-util"/],
-      ['package.json', /"lodash"/]
-    ];
+    it('creates the correct content into the gulpfile when angular enabled', function (done) {
+      helpers.mockPrompt(this.app, {
+        appName: 'myapp',
+        basicFeatures : ['includeAngular']
+      });
 
-    this.app.options['skip-install'] = true;
-    this.timeout(15000);
-    this.app.run({}, function () {
-      helpers.assertFileContent(expectedContent);
-      done();
+      var expectedContent = [
+        ['gulpfile.js', /karma = require\('karma'\).server/],
+        ['gulpfile.js', /gutil = require\('gulp-util'\)/],
+        ['gulpfile.js', /_ = require\('lodash'\)/],
+        ['gulpfile.js', /karma.start\(_.assign\({}, karmaCommonConf, {singleRun: true}\), karmaExit\);/],
+        ['gulpfile.js', /gulp.watch\(\['.\/public\/scripts\/\*\*\/\*.js', '.\/test\/\*\*\/\*.js', 'gulpfile.js'\], \['test'\]\);/]
+      ];
+
+      this.app.options['skip-install'] = true;
+      this.app.run({}, function () {
+        helpers.assertFileContent(expectedContent);
+        done();
+      });
     });
   });
 });
