@@ -36,7 +36,8 @@
     "gulp-jscs": "~0.3.0",
     "gulp-jshint": "~1.4.0",
     "gulp-mocha": "~0.4.1",
-    "jshint-stylish": "~0.1.5"
+    "jshint-stylish": "~0.1.5",
+    "lodash": "^2.4.1"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
