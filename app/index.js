@@ -175,6 +175,8 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('gulp-livereload');
   npmList.push('gulp-notify-growl');
   npmList.push('connect');
+  npmList.push('serve-static');
+  npmList.push('morgan');
   npmList.push('wiredep');
   if (this.includeAngular === true) {
     npmList.push('generator-angular');

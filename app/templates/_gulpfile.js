@@ -1,6 +1,7 @@
 'use strict';
 
-var gulp = require('gulp'),<% if (includeScss) { %>
+var gulp = require('gulp'),
+    path = require('path'),<% if (includeScss) { %>
     sass = require('gulp-ruby-sass'),<% } %>
     jshint = require('gulp-jshint'),
     jscs = require('gulp-jscs'),
@@ -70,14 +71,14 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('serve', function () {
-  var connect = require('connect'),
-      directory = __dirname + '/public',
+  var server = require('connect')(),
+      serveStatic = require('serve-static'),
+      morgan  = require('morgan'),
+      directory = path.join(__dirname, '/public'),
       port = 3000;
-
-  connect()
-    .use(connect.logger('dev'))
-    .use(connect.static(directory))
-    .listen(port);
+  server.use(serveStatic(directory));
+  server.use(morgan({ format: 'dev', immediate: true }));
+  server.listen(port);
 });
 
 gulp.task('open', ['scripts'<% if (includeScss) { %>, 'styles'<% } %>], function () {
