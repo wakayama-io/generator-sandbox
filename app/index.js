@@ -58,6 +58,10 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
       name: 'SCSS',
       value: 'includeScss',
       checked: false
+    }, {
+      name: 'Gulpicon',
+      value: 'includeGulpicon',
+      checked: false
     }]
   }, {
     when: function (answers) {
@@ -132,6 +136,7 @@ SandboxGenerator.prototype.promptUser = function promptUser() {
     this.includeInuitCss = hasFeature('includeInuitCss');
     this.includeNormalizeScss = hasFeature('includeNormalizeScss');
     this.includeCsswizardryGrids = hasFeature('includeCsswizardryGrids');
+    this.includeGulpicon = hasFeature('includeGulpicon');
 
     done();
   }.bind(this));
@@ -151,6 +156,62 @@ SandboxGenerator.prototype.app = function app() {
     this.template('_main.scss', 'public/styles/scss/main.scss');
   } else {
     this.copy('_main.css', 'public/styles/main.css');
+  }
+};
+
+SandboxGenerator.prototype.wireDep = function wireDep() {
+  var scriptExcludes = [];
+  if (this.includeAngular === true) {
+    scriptExcludes.push(/angular\//);
+  }
+  if (this.includeLodash === true) {
+    scriptExcludes.push(/lodash\//);
+  }
+  this.wiredepScriptExcludes = scriptExcludes.join(', ');
+
+  var scssExcludes = [];
+  if (this.includeInuitCss === true) {
+    scssExcludes.push(/inuit.css\//);
+  }
+  if (this.includeNormalizeScss === true) {
+    scssExcludes.push(/modularized-normalize-scss\//);
+  }
+  if (this.includeCsswizardryGrids === true) {
+    scssExcludes.push(/csswizardry-grids\//);
+  }
+  this.wiredepScssExcludes = scssExcludes.join(', ');
+};
+
+SandboxGenerator.prototype.gulpfile = function gulpfile() {
+  this.template('_gulpfile.js', 'gulpfile.js');
+};
+
+SandboxGenerator.prototype.jsHint = function jsHint() {
+  this.template('jshintrc', '.jshintrc');
+};
+
+SandboxGenerator.prototype.jscsJson = function jscsJson() {
+  this.copy('jscs.json', '.jscs.json');
+};
+
+SandboxGenerator.prototype.editorConfig = function editorConfig() {
+  this.copy('editorconfig', '.editorconfig');
+};
+
+SandboxGenerator.prototype.git = function git() {
+  this.copy('gitattributes', '.gitattributes');
+  this.template('gitignore', '.gitignore');
+};
+
+SandboxGenerator.prototype.readme = function readme() {
+  this.template('_README.md', 'README.md');
+};
+
+SandboxGenerator.prototype.gulpicon = function gulpicon() {
+  if (this.includeGulpicon === true) {
+    this.mkdir('public/images');
+    this.mkdir('public/images/icons');
+    this.mkdir('public/images/icons/src');
   }
 };
 
@@ -186,6 +247,14 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('gulp-util');
     npmList.push('lodash');
   }
+  if (this.includeGulpicon === true) {
+    npmList.push('directory-encoder');
+    npmList.push('gulp-svgmin');
+    npmList.push('gulp-clean');
+    npmList.push('svg-to-png');
+    npmList.push('gulp-filter');
+    npmList.push('gulp-rename');
+  }
 
   var count = npmList.length;
 
@@ -210,11 +279,9 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
       }
     }.bind(this));
   }, this);
-
 };
 
 SandboxGenerator.prototype.bower = function bower() {
-
   var cb = this.async();
 
   // Generate bower.json
@@ -294,52 +361,4 @@ SandboxGenerator.prototype.bower = function bower() {
       }
     });
   });
-};
-
-SandboxGenerator.prototype.wireDep = function wireDep() {
-  var scriptExcludes = [];
-  if (this.includeAngular === true) {
-    scriptExcludes.push(/angular\//);
-  }
-  if (this.includeLodash === true) {
-    scriptExcludes.push(/lodash\//);
-  }
-  this.wiredepScriptExcludes = scriptExcludes.join(', ');
-
-  var scssExcludes = [];
-  if (this.includeInuitCss === true) {
-    scssExcludes.push(/inuit.css\//);
-  }
-  if (this.includeNormalizeScss === true) {
-    scssExcludes.push(/modularized-normalize-scss\//);
-  }
-  if (this.includeCsswizardryGrids === true) {
-    scssExcludes.push(/csswizardry-grids\//);
-  }
-  this.wiredepScssExcludes = scssExcludes.join(', ');
-};
-
-SandboxGenerator.prototype.gulpfile = function gulpfile() {
-  this.template('_gulpfile.js', 'gulpfile.js');
-};
-
-SandboxGenerator.prototype.jsHint = function jsHint() {
-  this.template('jshintrc', '.jshintrc');
-};
-
-SandboxGenerator.prototype.jscsJson = function jscsJson() {
-  this.copy('jscs.json', '.jscs.json');
-};
-
-SandboxGenerator.prototype.editorConfig = function editorConfig() {
-  this.copy('editorconfig', '.editorconfig');
-};
-
-SandboxGenerator.prototype.git = function git() {
-  this.copy('gitattributes', '.gitattributes');
-  this.template('gitignore', '.gitignore');
-};
-
-SandboxGenerator.prototype.readme = function readme() {
-  this.template('_README.md', 'README.md');
 };

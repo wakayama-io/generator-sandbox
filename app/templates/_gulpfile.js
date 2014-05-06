@@ -125,6 +125,104 @@ gulp.task('watch', function () {<% if (includeScss) { %>
   gulp.watch(['./public/scripts/**/*.js', './test/**/*.js', 'gulpfile.js'], ['test']);<% } %>
 });
 
+gulp.task('gulpicon', function () {
+  var clean = require('gulp-clean'),
+      filter = require('gulp-filter'),
+      rename = require('gulp-rename'),
+      svgToPng = require('svg-to-png'),
+      svgmin = require('gulp-svgmin'),
+      DirectoryEncoder = require('directory-encoder'),
+      icons = path.join(__dirname, '/public/images/icons/'),
+      src = path.join(icons, '/src/**/*'),
+      dest = path.join(icons, '/dest/'),
+      svgtmp = path.join(dest, '/svgtmp/'),
+      pngtmp = path.join(dest, '/pngtmp/'),
+      pngs = path.join(dest, '/pngs/'),
+      dataSvgCss = path.join(dest, '/_icons.data.svg.css'),
+      dataPngCss = path.join(dest, '/_icons.data.png.css'),
+      urlPngCss = path.join(dest, '/_icons.fallback.css'),
+      iconPrefix = 'icon-';
+
+  // Remove icons dest folder
+  gulp.src(dest, {read: false})
+        .pipe(clean());
+
+  // Copy all png icons with added icon- prefix to pngtmp
+  var pngFilter = filter('**/*.png');
+  gulp.src(src)
+    .pipe(pngFilter)
+    .pipe(rename({prefix: iconPrefix}))
+    .pipe(gulp.dest(pngtmp));
+
+  // Copy all png icons from pngtmp to pngs
+  gulp.src(pngtmp)
+    .pipe(gulp.dest(pngs));
+
+  // Copy all svg icons with added icon- prefix to svgtmp
+  var svgFilter = filter('**/*.svg');
+  gulp.src(src)
+    .pipe(svgFilter)
+    .pipe(rename({prefix: iconPrefix}))
+    .pipe(svgmin())
+    .pipe(gulp.dest(svgtmp));
+
+  // Convert svg icons to pngs and copy icons to pngs
+  var svgToPngOpts = {
+    defaultWidth: "400px",
+    defaultHeight: "300px"
+  };
+  svgToPng.convert( svgtmp, pngs, svgToPngOpts )
+    .then( function( result , err ){
+      if( err ){
+        throw new Error( err );
+      }
+
+      var o = {
+        pngfolder: pngs,
+        // customselectors: config.customselectors,
+        // template: path.resolve( config.template ),
+        // previewTemplate: path.resolve( config.previewTemplate ),
+        noencodepng: false,
+        prefix: '.'
+      };
+
+      var o2 = {
+        pngfolder: pngs,
+        pngpath: './images/icons/dest/pngs/',
+        // customselectors: config.customselectors,
+        // template: path.resolve( config.template ),
+        // previewTemplate: path.resolve( config.previewTemplate ),
+        noencodepng: true,
+        prefix: '.'
+      };
+
+      var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, o ),
+        pngde = new DirectoryEncoder( pngtmp , dataPngCss, o ),
+        pngdefall = new DirectoryEncoder( pngs , urlPngCss, o2 );
+
+      console.log("Writing CSS");
+
+      try {
+        svgde.encode();
+        pngde.encode();
+        pngdefall.encode();
+      } catch( e ){
+        throw new Error( e );
+      }
+
+      // Create preview file
+
+      // Remove svg- and pngtmp
+      gulp.src(svgtmp, {read: false})
+        .pipe(clean());
+
+        gulp.src(pngtmp, {read: false})
+          .pipe(clean());
+
+      console.log('done');
+  });
+});
+
 gulp.task('default', function () {
   gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
 });

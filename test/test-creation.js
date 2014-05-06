@@ -120,8 +120,7 @@ describe('the sandbox generator', function () {
   });
 
   describe('angular karma tests', function () {
-
-    this.timeout(15000);
+    this.timeout(25000);
 
     it('creates karma test files when angular enabled', function (done) {
       helpers.mockPrompt(this.app, {
@@ -165,4 +164,54 @@ describe('the sandbox generator', function () {
       });
     });
   });
+
+
+  describe('gulpicons', function () {
+
+    this.timeout(15000);
+
+    it('creates the correct files if enabled', function (done) {
+      helpers.mockPrompt(this.app, {
+        appName: 'myapp',
+        basicFeatures : ['includeGulpicon']
+      });
+
+      var expectedFiles = [
+        // Add files you expect to exist here
+        'public/images/',
+        'public/images/icons/',
+        'public/images/icons/src/'
+      ];
+
+      this.app.options['skip-install'] = true;
+      this.app.run({}, function () {
+        helpers.assertFiles(expectedFiles);
+        done();
+      });
+    });
+
+    it('creates the correct content into the gulpfile when gulpicons enabled', function (done) {
+      helpers.mockPrompt(this.app, {
+        appName: 'myapp',
+        basicFeatures : ['includeGulpicon']
+      });
+
+      var expectedContent = [
+        ['package.json', /"gulp-clean"/],
+        ['package.json', /"directory-encoder"/],
+        ['package.json', /"gulp-svgmin"/],
+        ['package.json', /"svg-to-png"/],
+        ['package.json', /"gulp-filter"/],
+        ['package.json', /"gulp-rename"/],
+        ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/]
+      ];
+
+      this.app.options['skip-install'] = true;
+      this.app.run({}, function () {
+        helpers.assertFileContent(expectedContent);
+        done();
+      });
+    });
+  });
+
 });
