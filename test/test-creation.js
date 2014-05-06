@@ -78,7 +78,7 @@ describe('the sandbox generator', function () {
     ];
 
     var expectedContent = [
-      ['public/index.html', /ng-app="myapp"/],
+      ['public/index.html', /ng-app="myappApp"/],
       ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
       ['public/index.html', /<script src="lib\/angular\/angular.js"><\/script>/],
       ['public/index.html', /<script src="lib\/angular-resource\/angular-resource.js"><\/script>/],
