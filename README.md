@@ -6,7 +6,7 @@
 
 ## Features
 * [Gulp](http://gulpjs.com/)
-* [Built-in server](http://www.senchalabs.org/connect/)
+* [Built-in preview server](http://www.senchalabs.org/connect/)
 * [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en)
 * [Growl Notifications](http://growl.info/)
 * [JSHint](http://www.jshint.com/)
@@ -14,7 +14,7 @@
 * [Wiredep](https://github.com/taptapship/wiredep)
 
 ## Optional
-* [AngularJS](https://angularjs.org/), compatible with sub-generators of [generator-angular](https://github.com/yeoman/generator-angular)
+* [AngularJS](https://angularjs.org/),
 * [Angular-cookies](https://docs.angularjs.org/api/ngCookies)
 * [Angular-loader](http://docs.angularjs.org/guide/bootstrap)
 * [Angular-resource](https://docs.angularjs.org/api/ngResource)
@@ -26,6 +26,28 @@
 * [Inuit.css](https://github.com/csswizardry/inuit.css/)
 * [Normalize.scss](https://github.com/hail2u/normalize.scss)
 * [Csswizardry Grids](https://github.com/csswizardry/csswizardry-grids)
+
+### AngularJS
+##### Included Features
+* Testing with [Karma](http://karma-runner.github.io/0.12/index.html) and [Jasmine](http://jasmine.github.io/)
+* compatible with sub-generators of [generator-angular](https://github.com/yeoman/generator-angular)
+
+##### Angular Sub-Generators
+Available sub-generators from [generator-angular](https://github.com/yeoman/generator-angular)
+
+* angular:controller
+* angular:directive
+* angular:filter
+* angular:route
+* angular:service
+* angular:provider
+* angular:factory
+* angular:value
+* angular:constant
+* angular:decorator
+* angular:view
+
+**Note: Generators are to be run from the root directory of your app.**
 
 ## Dependencies
 * [Node.js](http://nodejs.org/)
@@ -49,23 +71,6 @@ npm install -g generator-sandbox
   Skips the automatic execution of `bower` and `npm` after scaffolding has finished.
 * `--skip-welcome-message`
   Skips the welcome message.
-
-## Sub-Generators
-Available sub-generators from [generator-angular](https://github.com/yeoman/generator-angular)
-
-* angular:controller
-* angular:directive
-* angular:filter
-* angular:route
-* angular:service
-* angular:provider
-* angular:factory
-* angular:value
-* angular:constant
-* angular:decorator
-* angular:view
-
-**Note: Generators are to be run from the root directory of your app.**
 
 ## License
 [BSD license](http://opensource.org/licenses/bsd-license.php)
