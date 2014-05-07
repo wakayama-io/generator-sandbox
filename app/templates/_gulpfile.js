@@ -186,9 +186,9 @@ gulp.task('gulpicon', function () {
               noencodepng: true,
               prefix: '.'
             };
-            var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig ),
-              pngde = new DirectoryEncoder( pngtmp , dataPngCss, deDataConfig ),
-              pngdefall = new DirectoryEncoder( pngs , urlPngCss, deUrlConfig );
+            var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig),
+              pngde = new DirectoryEncoder(pngtmp, dataPngCss, deDataConfig),
+              pngdefall = new DirectoryEncoder(pngs, urlPngCss, deUrlConfig);
 
             console.log("Writing CSS");
 

@@ -219,6 +219,10 @@ SandboxGenerator.prototype.gulpicon = function gulpicon() {
     this.copy('_gulpicon-img-stats.js', 'public/images/icons/lib/img-stats.js');
     this.copy('_gulpicon-helper.js', 'public/images/icons/lib/gulpicon-helper.js');
     this.copy('_gulpicon-loader.js', 'public/images/icons/lib/gulpicon-loader.js');
+    this.mkdir('public/images/icons/dest/');
+    this.write('public/images/icons/dest/icons.data.svg.css', '');
+    this.write('public/images/icons/dest/icons.data.png.css', '');
+    this.write('public/images/icons/dest/icons.fallback.css', '');
   }
 };
 

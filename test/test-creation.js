@@ -165,8 +165,7 @@ describe('the sandbox generator', function () {
     });
   });
 
-
-  describe('gulpicons', function () {
+  describe('gulpicon', function () {
 
     this.timeout(15000);
 
@@ -187,7 +186,11 @@ describe('the sandbox generator', function () {
         'public/images/icons/lib/',
         'public/images/icons/lib/img-stats.js',
         'public/images/icons/lib/gulpicon-helper.js',
-        'public/images/icons/lib/gulpicon-loader.js'
+        'public/images/icons/lib/gulpicon-loader.js',
+        'public/images/icons/dest/',
+        'public/images/icons/dest/icons.data.svg.css',
+        'public/images/icons/dest/icons.data.png.css',
+        'public/images/icons/dest/icons.fallback.css'
       ];
 
       this.app.options['skip-install'] = true;
@@ -197,7 +200,7 @@ describe('the sandbox generator', function () {
       });
     });
 
-    it('creates the correct content into the gulpfile when gulpicons enabled', function (done) {
+    it('creates the correct content into the gulpfile when gulpicon enabled', function (done) {
       helpers.mockPrompt(this.app, {
         appName: 'myapp',
         basicFeatures : ['includeGulpicon']
@@ -215,7 +218,10 @@ describe('the sandbox generator', function () {
         ['package.json', /"handlebars"/],
         ['package.json', /"lodash"/],
         ['package.json', /"uglify-js"/],
-        ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/]
+        ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/],
+        ['public/index.html', /<noscript><link href="images\/icons\/dest\/icons.fallback.css" rel="stylesheet"><\/noscript>/],
+        ['public/index.html' ,/gulpicon\(\["images\/icons\/dest\/icons.data.svg.css", "public\/images\/icons\/dest\/icons.data.png.css", "public\/images\/icons\/dest\/icons.fallback.css"\]\);/],
+        ['public/index.html', /<script src="images\/icons\/lib\/gulpicon-loader.js"><\/script>/]
       ];
 
       this.app.options['skip-install'] = true;

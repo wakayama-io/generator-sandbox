@@ -2,7 +2,12 @@
 <html lang="en" <% if (includeAngular) { %>ng-app="<%= appName %>App"<% } %>>
 <head>
   <meta charset="UTF-8">
-  <title><%= appName %></title>
+  <title><%= appName %></title><% if (includeGulpicon) { %>
+  <script src="images/icons/lib/gulpicon-loader.js"></script>
+  <script>
+    gulpicon(["images/icons/dest/icons.data.svg.css", "public/images/icons/dest/icons.data.png.css", "public/images/icons/dest/icons.fallback.css"]);
+  </script>
+  <noscript><link href="images/icons/dest/icons.fallback.css" rel="stylesheet"></noscript><% } %>
   <!-- build:css styles/main.min.css --><% if (!includeScss) { %>
   <!-- bower:css -->
   <!-- endbower --><% } %>
