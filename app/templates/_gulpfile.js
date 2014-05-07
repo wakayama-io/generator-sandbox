@@ -147,31 +147,25 @@ gulp.task('gulpicon', function () {
   gulp.src(dest, {read: false})  // Remove dest folder
     .pipe(clean())
     .on ('end', function() {
-      // Copy all png icons with added icon- prefix to pngtmp and pngs
-      // and all svg icons with added icon- prefix to svgtmp
       var pngFilter = filter('**/*.png');
       var svgFilter = filter('**/*.svg');
-
-      es.concat(
+      es.concat(  // Combines the streams and ends only when all streams emitted end
         gulp.src(src)
-          .pipe(pngFilter)
-          .pipe(rename({prefix: iconPrefix}))
-          .pipe(gulp.dest(pngtmp))
-          .pipe(gulp.dest(pngs))
+          .pipe(pngFilter) // Filter pngs
+          .pipe(rename({prefix: iconPrefix})) // Add icon prefix
+          .pipe(gulp.dest(pngtmp))  // Put them in pngtmp
+          .pipe(gulp.dest(pngs))  // And in pngs folder
           .pipe(pngFilter.restore())
-          .pipe(svgFilter)
-          .pipe(rename({prefix: iconPrefix}))
-          .pipe(svgmin())
-          .pipe(gulp.dest(svgtmp))
+          .pipe(svgFilter)  // Filter svgs
+          .pipe(rename({prefix: iconPrefix})) // Add icon prefix
+          .pipe(svgmin()) // Clean them
+          .pipe(gulp.dest(svgtmp))  // Put them in svgtmp folder
       ).on ('end', function() {
-        // es.concat - combines the streams and ends only when all streams emitted end
-
-        // Convert svg icons to pngs and copy icons to pngs
         var svgToPngOpts = {
           defaultWidth: "400px",
           defaultHeight: "300px"
         };
-        svgToPng.convert( svgtmp, pngs, svgToPngOpts )
+        svgToPng.convert( svgtmp, pngs, svgToPngOpts )  // Convert svgs to pngs and put them in pngs folder
           .then( function( result , err ){
             if( err ){
               throw new Error( err );
@@ -193,7 +187,6 @@ gulp.task('gulpicon', function () {
               noencodepng: true,
               prefix: '.'
             };
-
             var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig ),
               pngde = new DirectoryEncoder( pngtmp , dataPngCss, deDataConfig ),
               pngdefall = new DirectoryEncoder( pngs , urlPngCss, deUrlConfig );
@@ -208,11 +201,10 @@ gulp.task('gulpicon', function () {
               throw new Error( e );
             }
 
-            // Create preview file
+            // TODO: Create preview file
 
-            // Remove svg- and pngtmp
             es.concat(
-              gulp.src(svgtmp, {read: false})
+              gulp.src(svgtmp, {read: false}) // Clean tmp folders
                 .pipe(clean()),
               gulp.src(pngtmp, {read: false})
                 .pipe(clean())
