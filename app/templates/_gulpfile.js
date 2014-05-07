@@ -139,9 +139,9 @@ gulp.task('gulpicon', function () {
       svgtmp = path.join(dest, '/svgtmp/'),
       pngtmp = path.join(dest, '/pngtmp/'),
       pngs = path.join(dest, '/pngs/'),
-      dataSvgCss = path.join(dest, '/_icons.data.svg.css'),
-      dataPngCss = path.join(dest, '/_icons.data.png.css'),
-      urlPngCss = path.join(dest, '/_icons.fallback.css'),
+      dataSvgCss = path.join(dest, '/icons.data.svg.css'),
+      dataPngCss = path.join(dest, '/icons.data.png.css'),
+      urlPngCss = path.join(dest, '/icons.fallback.css'),
       iconPrefix = 'icon-';
 
   gulp.src(dest, {read: false})  // Remove dest folder
@@ -172,18 +172,17 @@ gulp.task('gulpicon', function () {
             }
             var deDataConfig = {
               pngfolder: pngs,
-              // customselectors: config.customselectors,
-              // template: path.resolve( config.template ),
-              // previewTemplate: path.resolve( config.previewTemplate ),
+              pngpath: './images/icons/dest/pngs/',
+              customselectors: {},
+              template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
               noencodepng: false,
               prefix: '.'
             };
             var deUrlConfig = {
               pngfolder: pngs,
               pngpath: './images/icons/dest/pngs/',
-              // customselectors: config.customselectors,
-              // template: path.resolve( config.template ),
-              // previewTemplate: path.resolve( config.previewTemplate ),
+              customselectors: {},
+              template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
               noencodepng: true,
               prefix: '.'
             };
@@ -201,7 +200,22 @@ gulp.task('gulpicon', function () {
               throw new Error( e );
             }
 
-            // TODO: Create preview file
+            console.log("Generating Preview");
+
+            // generate preview
+            var previewTemplate = path.join(__dirname,'/public/images/icons/templates/gulpicon-preview.hbs');
+            var helper = require( path.join( __dirname, '/public/images/icons/lib/', 'gulpicon-helper' ) );
+            var previewhtml = 'preview.html';
+            var cssPrefix = '.';
+            var uglify = require( 'uglify-js' );
+            var loader = path.join( __dirname, '/public/images/icons/lib/', 'gulpicon-loader.js' );
+            var loaderMin = uglify.minify( loader ).code;
+
+            try {
+              helper.createPreview(svgtmp, dest, '400px', '300px', loaderMin, previewhtml, cssPrefix, previewTemplate);
+            } catch(er) {
+              throw new Error( er );
+            }
 
             es.concat(
               gulp.src(svgtmp, {read: false}) // Clean tmp folders

@@ -180,7 +180,14 @@ describe('the sandbox generator', function () {
         // Add files you expect to exist here
         'public/images/',
         'public/images/icons/',
-        'public/images/icons/src/'
+        'public/images/icons/src/',
+        'public/images/icons/templates/',
+        'public/images/icons/templates/gulpicon-styles.hbs',
+        'public/images/icons/templates/gulpicon-preview.hbs',
+        'public/images/icons/lib/',
+        'public/images/icons/lib/img-stats.js',
+        'public/images/icons/lib/gulpicon-helper.js',
+        'public/images/icons/lib/gulpicon-loader.js'
       ];
 
       this.app.options['skip-install'] = true;
@@ -204,6 +211,10 @@ describe('the sandbox generator', function () {
         ['package.json', /"gulp-filter"/],
         ['package.json', /"gulp-rename"/],
         ['package.json', /"event-stream"/],
+        ['package.json', /"xmldom"/],
+        ['package.json', /"handlebars"/],
+        ['package.json', /"lodash"/],
+        ['package.json', /"uglify-js"/],
         ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/]
       ];
 

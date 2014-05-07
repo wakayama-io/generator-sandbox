@@ -212,6 +212,13 @@ SandboxGenerator.prototype.gulpicon = function gulpicon() {
     this.mkdir('public/images');
     this.mkdir('public/images/icons');
     this.mkdir('public/images/icons/src');
+    this.mkdir('public/images/icons/templates');
+    this.copy('_gulpicon-styles.hbs', 'public/images/icons/templates/gulpicon-styles.hbs');
+    this.copy('_gulpicon-preview.hbs', 'public/images/icons/templates/gulpicon-preview.hbs');
+    this.mkdir('public/images/icons/lib/');
+    this.copy('_gulpicon-img-stats.js', 'public/images/icons/lib/img-stats.js');
+    this.copy('_gulpicon-helper.js', 'public/images/icons/lib/gulpicon-helper.js');
+    this.copy('_gulpicon-loader.js', 'public/images/icons/lib/gulpicon-loader.js');
   }
 };
 
@@ -255,6 +262,11 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('gulp-filter');
     npmList.push('gulp-rename');
     npmList.push('event-stream');
+    npmList.push('xmldom');
+    npmList.push('handlebars');
+    npmList.push('lodash');
+    npmList.push('event-stream');
+    npmList.push('uglify-js');
   }
 
   var count = npmList.length;
