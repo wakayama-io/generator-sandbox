@@ -203,6 +203,7 @@ describe('the sandbox generator', function () {
         ['package.json', /"svg-to-png"/],
         ['package.json', /"gulp-filter"/],
         ['package.json', /"gulp-rename"/],
+        ['package.json', /"event-stream"/],
         ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/]
       ];
 

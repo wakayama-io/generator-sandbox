@@ -254,6 +254,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('svg-to-png');
     npmList.push('gulp-filter');
     npmList.push('gulp-rename');
+    npmList.push('event-stream');
   }
 
   var count = npmList.length;
