@@ -144,85 +144,84 @@ gulp.task('gulpicon', function () {
       urlPngCss = path.join(dest, '/_icons.fallback.css'),
       iconPrefix = 'icon-';
 
-  // TODO: should be its own task
-  // Remove dest folder
-  // gulp.src(dest, {read: false})
-  //   .pipe(clean());
+  gulp.src(dest, {read: false})  // Remove dest folder
+    .pipe(clean())
+    .on ('end', function() {
+      // Copy all png icons with added icon- prefix to pngtmp and pngs
+      // and all svg icons with added icon- prefix to svgtmp
+      var pngFilter = filter('**/*.png');
+      var svgFilter = filter('**/*.svg');
 
-  // Copy all png icons with added icon- prefix to pngtmp and pngs
-  // and all svg icons with added icon- prefix to svgtmp
-  var pngFilter = filter('**/*.png');
-  var svgFilter = filter('**/*.svg');
+      es.concat(
+        gulp.src(src)
+          .pipe(pngFilter)
+          .pipe(rename({prefix: iconPrefix}))
+          .pipe(gulp.dest(pngtmp))
+          .pipe(gulp.dest(pngs))
+          .pipe(pngFilter.restore())
+          .pipe(svgFilter)
+          .pipe(rename({prefix: iconPrefix}))
+          .pipe(svgmin())
+          .pipe(gulp.dest(svgtmp))
+      ).on ('end', function() {
+        // es.concat - combines the streams and ends only when all streams emitted end
 
-  es.concat(
-    gulp.src(src)
-      .pipe(pngFilter)
-      .pipe(rename({prefix: iconPrefix}))
-      .pipe(gulp.dest(pngtmp))
-      .pipe(gulp.dest(pngs))
-      .pipe(pngFilter.restore())
-      .pipe(svgFilter)
-      .pipe(rename({prefix: iconPrefix}))
-      .pipe(svgmin())
-      .pipe(gulp.dest(svgtmp))
-  ).on('end', function(){
-    // es.concat - combines the streams and ends only when all streams emitted end
-
-    // Convert svg icons to pngs and copy icons to pngs
-    var svgToPngOpts = {
-      defaultWidth: "400px",
-      defaultHeight: "300px"
-    };
-    svgToPng.convert( svgtmp, pngs, svgToPngOpts )
-      .then( function( result , err ){
-        if( err ){
-          throw new Error( err );
-        }
-        var deDataConfig = {
-          pngfolder: pngs,
-          // customselectors: config.customselectors,
-          // template: path.resolve( config.template ),
-          // previewTemplate: path.resolve( config.previewTemplate ),
-          noencodepng: false,
-          prefix: '.'
+        // Convert svg icons to pngs and copy icons to pngs
+        var svgToPngOpts = {
+          defaultWidth: "400px",
+          defaultHeight: "300px"
         };
-        var deUrlConfig = {
-          pngfolder: pngs,
-          pngpath: './images/icons/dest/pngs/',
-          // customselectors: config.customselectors,
-          // template: path.resolve( config.template ),
-          // previewTemplate: path.resolve( config.previewTemplate ),
-          noencodepng: true,
-          prefix: '.'
-        };
+        svgToPng.convert( svgtmp, pngs, svgToPngOpts )
+          .then( function( result , err ){
+            if( err ){
+              throw new Error( err );
+            }
+            var deDataConfig = {
+              pngfolder: pngs,
+              // customselectors: config.customselectors,
+              // template: path.resolve( config.template ),
+              // previewTemplate: path.resolve( config.previewTemplate ),
+              noencodepng: false,
+              prefix: '.'
+            };
+            var deUrlConfig = {
+              pngfolder: pngs,
+              pngpath: './images/icons/dest/pngs/',
+              // customselectors: config.customselectors,
+              // template: path.resolve( config.template ),
+              // previewTemplate: path.resolve( config.previewTemplate ),
+              noencodepng: true,
+              prefix: '.'
+            };
 
-        var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig ),
-          pngde = new DirectoryEncoder( pngtmp , dataPngCss, deDataConfig ),
-          pngdefall = new DirectoryEncoder( pngs , urlPngCss, deUrlConfig );
+            var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig ),
+              pngde = new DirectoryEncoder( pngtmp , dataPngCss, deDataConfig ),
+              pngdefall = new DirectoryEncoder( pngs , urlPngCss, deUrlConfig );
 
-        console.log("Writing CSS");
+            console.log("Writing CSS");
 
-        try {
-          svgde.encode();
-          pngde.encode();
-          pngdefall.encode();
-        } catch( e ){
-          throw new Error( e );
-        }
+            try {
+              svgde.encode();
+              pngde.encode();
+              pngdefall.encode();
+            } catch( e ){
+              throw new Error( e );
+            }
 
-        // Create preview file
+            // Create preview file
 
-        // Remove svg- and pngtmp
-        es.concat(
-          gulp.src(svgtmp, {read: false})
-            .pipe(clean()),
-          gulp.src(pngtmp, {read: false})
-            .pipe(clean())
-        ).on('end', function(){
-          console.log('done');
+            // Remove svg- and pngtmp
+            es.concat(
+              gulp.src(svgtmp, {read: false})
+                .pipe(clean()),
+              gulp.src(pngtmp, {read: false})
+                .pipe(clean())
+            ).on('end', function(){
+              console.log('done');
+            });
         });
+      });
     });
-  });
 });
 
 gulp.task('default', function () {
