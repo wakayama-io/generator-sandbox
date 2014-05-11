@@ -11,7 +11,7 @@ var path = require('path');
 
 var paths = {
   lint: ['gulpfile.js', 'app/index.js'],
-  tests: ['./test/**/*.js', '!test/{temp,temp/**}'],
+  tests: ['./test/**/*.js', '!./test/{temp,temp/**}'],
   source: ['app/index.js']
 };
 
