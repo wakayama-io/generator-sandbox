@@ -1,13 +1,10 @@
 'use strict';
 
 var gulp   = require('gulp');
-var jshint = require('gulp-jshint');
-var jscs = require('gulp-jscs');
 var stylish = require('jshint-stylish');
-var istanbul = require('gulp-istanbul');
-var mocha  = require('gulp-mocha');
 var _  = require('lodash');
 var path = require('path');
+var plugins = require('gulp-load-plugins')();
 
 var paths = {
   lint: ['gulpfile.js', 'app/index.js'],
@@ -17,18 +14,18 @@ var paths = {
 
 gulp.task('lint', function () {
   return gulp.src(paths.lint)
-    .pipe(jshint(path.join(__dirname, '.jshintrc')))
-    .pipe(jscs(path.join(__dirname, '.jscs.json')))
-    .pipe(jshint.reporter(stylish));
+    .pipe(plugins.jshint(path.join(__dirname, '.jshintrc')))
+    .pipe(plugins.jscs(path.join(__dirname, '.jscs.json')))
+    .pipe(plugins.jshint.reporter(stylish));
 });
 
 gulp.task('istanbul', function (cb) {
   gulp.src(paths.source)
-    .pipe(istanbul()) // Covering files
+    .pipe(plugins.istanbul()) // Covering files
     .on('end', function () {
       gulp.src(paths.tests, {cwd: __dirname})
-        .pipe(mocha())
-        .pipe(istanbul.writeReports()) // Creating the reports after tests run
+        .pipe(plugins.mocha())
+        .pipe(plugins.istanbul.writeReports()) // Creating the reports after tests run
         .on('end', cb);
     });
 });
