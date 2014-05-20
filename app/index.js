@@ -286,7 +286,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
       var version = '*';
       if (!err && result.name && result.version) {
         name = result.name;
-        version = '^' + result.version;
+        version = result.version;
       }
       _packageJSON.devDependencies[name] = version;
       if (!--count) {
@@ -363,7 +363,7 @@ SandboxGenerator.prototype.bower = function bower() {
       var version = '*';
       if (result && result.name && result.version) {
         name = result.name;
-        version = '^' + result.version;
+        version = result.version;
       }
       if (bowerDependencies.indexOf(packageName) !== -1) {
         _bowerJSON.dependencies[name] = version;
