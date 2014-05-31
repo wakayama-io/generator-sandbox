@@ -1,8 +1,8 @@
 # generator-sandbox
 [![NPM version](https://badge.fury.io/js/generator-sandbox.svg)](http://badge.fury.io/js/generator-sandbox)
-[![Build Status](https://secure.travis-ci.org/kojiwakayama/generator-sandbox.png?branch=master)](https://travis-ci.org/kojiwakayama/generator-sandbox)
-[![Dependency Status](https://david-dm.org/kojiwakayama/generator-sandbox.svg)](https://david-dm.org/kojiwakayama/generator-sandbox)
-[![Coverage Status](https://coveralls.io/repos/kojiwakayama/generator-sandbox/badge.png?branch=master)](https://coveralls.io/r/kojiwakayama/generator-sandbox?branch=master)
+[![Build Status](https://secure.travis-ci.org/wakayama-io/generator-sandbox.png?branch=master)](https://travis-ci.org/wakayama-io/generator-sandbox)
+[![Dependency Status](https://david-dm.org/wakayama-io/generator-sandbox.svg)](https://david-dm.org/wakayama-io/generator-sandbox)
+[![Coverage Status](https://coveralls.io/repos/wakayama-io/generator-sandbox/badge.png?branch=master)](https://coveralls.io/r/wakayama-io/generator-sandbox?branch=master)
 
 ## Features
 * [Gulp](http://gulpjs.com/)
