@@ -239,6 +239,7 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('gulp');
   if (this.includeScss === true) {
     npmList.push('gulp-ruby-sass');
+    npmList.push('gulp-csso');
   }
   npmList.push('gulp-load-plugins');
   npmList.push('gulp-util');

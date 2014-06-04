@@ -45,7 +45,10 @@ gulp.task('test', function () {
 
 gulp.task('styles', function () {
   return gulp.src('./public/styles/scss/*.scss')
-    .pipe(plugins.sass())
+    .pipe(plugins.plumber())
+    .pipe(plugins.rubySass())
+    .pipe(plugins.csso(true)) // disable structureMinimization
+    .pipe(plugins.plumber.stop())
     .pipe(gulp.dest('./public/styles/css'))
     .pipe(notify({
       title: 'Done.',
