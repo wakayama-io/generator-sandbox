@@ -120,121 +120,118 @@ gulp.task('watch', function () {<% if (includeScss) { %>
   watching = true;
   gulp.run('test');
   gulp.watch(['./public/scripts/**/*.js', './test/**/*.js', 'gulpfile.js'], ['test']);<% } %>
+});<% if (includeGulpicon) { %>
+
+gulp.task('clean-gulpicon', function () {
+  var icons = path.join(__dirname, '/public/images/icons/'),
+      dest = path.join(icons, '/dest/');
+  return gulp.src(dest, {read: false})  // Remove dest folder
+    .pipe(plugins.clean());
 });
 
-gulp.task('gulpicon', function () {
-  var es = require('event-stream'),
-      clean = require('gulp-clean'),
-      filter = require('gulp-filter'),
-      rename = require('gulp-rename'),
+gulp.task('gulpicon', ['clean-gulpicon'], function () {
+  var fs = require('fs'),
+      Q = require('q'),
       svgToPng = require('svg-to-png'),
-      svgmin = require('gulp-svgmin'),
       DirectoryEncoder = require('directory-encoder'),
-      icons = path.join(__dirname, '/public/images/icons/'),
+      uglify = require('uglify-js');
+
+  var icons = path.join(__dirname, '/public/images/icons/'),
       src = path.join(icons, '/src/**/*'),
       dest = path.join(icons, '/dest/'),
-      svgtmp = path.join(dest, '/svgtmp/'),
-      pngtmp = path.join(dest, '/pngtmp/'),
+      tmp = path.join(dest, '/tmp/'),
       pngs = path.join(dest, '/pngs/'),
-      fs = require('fs'),
       dataSvgCss = path.join(dest, '/icons.data.svg.css'),
       dataPngCss = path.join(dest, '/icons.data.png.css'),
       urlPngCss = path.join(dest, '/icons.fallback.css'),
-      iconPrefix = 'icon-';
+      iconPrefix = 'icon-',
+      helper = require(path.join(icons, '/lib/gulpicon-helper')),
+      deferred = Q.defer();
 
-  gulp.src(dest, {read: false})  // Remove dest folder
-    .pipe(clean())
-    .on ('end', function() {
-      var pngFilter = filter('**/*.png');
-      var svgFilter = filter('**/*.svg');
-      es.concat(  // Combines the streams and ends only when all streams emitted end
-        gulp.src(src)
-          .pipe(pngFilter) // Filter pngs
-          .pipe(rename({prefix: iconPrefix})) // Add icon prefix
-          .pipe(gulp.dest(pngtmp))  // Put them in pngtmp
-          .pipe(gulp.dest(pngs))  // And in pngs folder
-          .pipe(pngFilter.restore())
-          .pipe(svgFilter)  // Filter svgs
-          .pipe(rename({prefix: iconPrefix})) // Add icon prefix
-          .pipe(svgmin()) // Clean them
-          .pipe(gulp.dest(svgtmp))  // Put them in svgtmp folder
-      ).on ('end', function() {
-        var svgToPngOpts = {
-          defaultWidth: "400px",
-          defaultHeight: "300px"
+  var pngFilter = plugins.filter('**/*.png');
+  var svgFilter = plugins.filter('**/*.svg');
+  gulp.src(src)
+    .pipe(pngFilter) // Filter pngs
+    .pipe(plugins.rename({prefix: iconPrefix})) // Add icon prefix
+    .pipe(gulp.dest(pngs))  // Put them in pngs
+    .pipe(pngFilter.restore())
+    .pipe(svgFilter)  // Filter svgs
+    .pipe(plugins.rename({prefix: iconPrefix})) // Add icon prefix
+    .pipe(plugins.svgmin()) // Clean them
+    .pipe(gulp.dest(tmp))  // Put them in tmp folder
+    .on('end', function () {
+      var svgToPngOpts = {
+        defaultWidth: '400px',
+        defaultHeight: '300px'
+      };
+      svgToPng.convert(tmp, pngs, svgToPngOpts)  // Convert svgs to pngs and put them in pngs folder
+      .then(function (result, err) {
+        if (err) {
+          throw new Error(err);
+        }
+        var deDataConfig = {
+          pngfolder: pngs,
+          pngpath: './pngs/',
+          customselectors: {},
+          template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
+          noencodepng: false,
+          prefix: '.'
         };
-        svgToPng.convert( svgtmp, pngs, svgToPngOpts )  // Convert svgs to pngs and put them in pngs folder
-          .then( function( result , err ){
-            if( err ){
-              throw new Error( err );
-            }
-            var deDataConfig = {
-              pngfolder: pngs,
-              pngpath: './images/icons/dest/pngs/',
-              customselectors: {},
-              template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
-              noencodepng: false,
-              prefix: '.'
-            };
-            var deUrlConfig = {
-              pngfolder: pngs,
-              pngpath: './images/icons/dest/pngs/',
-              customselectors: {},
-              template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
-              noencodepng: true,
-              prefix: '.'
-            };
-            var svgde = new DirectoryEncoder(svgtmp, dataSvgCss, deDataConfig),
-              pngde = new DirectoryEncoder(pngtmp, dataPngCss, deDataConfig),
-              pngdefall = new DirectoryEncoder(pngs, urlPngCss, deUrlConfig);
+        var deUrlConfig = {
+          pngfolder: pngs,
+          pngpath: './pngs/',
+          customselectors: {},
+          template: path.resolve('./public/images/icons/templates/gulpicon-styles.hbs'),
+          noencodepng: true,
+          prefix: '.'
+        };
+        var svgde = new DirectoryEncoder(tmp, dataSvgCss, deDataConfig),
+            pngde = new DirectoryEncoder(pngs, dataPngCss, deDataConfig),
+            pngdefall = new DirectoryEncoder(pngs, urlPngCss, deUrlConfig);
 
-            plugins.util.log("Writing CSS");
+        plugins.util.log('Writing CSS');
 
-            try {
-              if (fs.existsSync(svgtmp)) {
-                svgde.encode();
-              }
-              if (fs.existsSync(pngtmp)) {
-                pngde.encode();
-              }
-              if (fs.existsSync(pngs)) {
-                pngdefall.encode();
-              }
-            } catch( e ){
-              throw new Error( e );
-            }
+        try {
+          if (fs.existsSync(tmp)) {
+            svgde.encode();
+          }
+          if (fs.existsSync(pngs)) {
+            pngde.encode();
+            pngdefall.encode();
+          }
+        } catch (e) {
+          throw new Error(e);
+        }
 
-            // generate preview
-            if (fs.existsSync(svgtmp)) {
-              plugins.util.log("Generating Preview");
+        if (fs.existsSync(tmp)) {
+          plugins.util.log('Generating Preview');
 
-              var previewTemplate = path.join(__dirname,'/public/images/icons/templates/gulpicon-preview.hbs');
-              var helper = require( path.join( __dirname, '/public/images/icons/lib/', 'gulpicon-helper' ) );
-              var previewhtml = 'preview.html';
-              var cssPrefix = '.';
-              var uglify = require( 'uglify-js' );
-              var loader = path.join( __dirname, '/public/images/icons/lib/', 'gulpicon-loader.js' );
-              var loaderMin = uglify.minify( loader ).code;
+          // generate preview
+          var previewTemplate = path.join(__dirname, '/public/images/icons/templates/gulpicon-preview.hbs');
+          var previewhtml = 'preview.html';
+          var cssPrefix = '.';
+          var loader = path.join(__dirname, '/public/images/icons/lib/', 'gulpicon-loader.js');
+          var loaderMin = uglify.minify(loader).code;
 
-              try {
-                helper.createPreview(svgtmp, dest, '400px', '300px', loaderMin, previewhtml, cssPrefix, previewTemplate);
-              } catch(er) {
-                throw new Error( er );
-              }
-            }
-            plugins.util.log("Cleaning up");
-            es.concat(
-              gulp.src(svgtmp, {read: false}) // Clean tmp folders
-                .pipe(clean()),
-              gulp.src(pngtmp, {read: false})
-                .pipe(clean())
-            ).on('end', function(){
-              plugins.util.log('done');
-            });
+          try {
+            helper.createPreview(tmp, dest, '400px', '300px', loaderMin, previewhtml, cssPrefix, previewTemplate);
+          } catch (er) {
+            throw new Error(er);
+          }
+        }
+
+        plugins.util.log('Cleaning up');
+        gulp.src(tmp, {read: false}) // Clean tmp folder
+        .pipe(plugins.clean())
+        .on('end', function () {
+          plugins.util.log('done');
+          deferred.resolve();
         });
       });
     });
-});
+
+  return deferred.promise;
+});<% } %>
 
 gulp.task('default', function () {
   gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');

@@ -219,10 +219,6 @@ SandboxGenerator.prototype.gulpicon = function gulpicon() {
     this.copy('_gulpicon-img-stats.js', 'public/images/icons/lib/img-stats.js');
     this.copy('_gulpicon-helper.js', 'public/images/icons/lib/gulpicon-helper.js');
     this.copy('_gulpicon-loader.js', 'public/images/icons/lib/gulpicon-loader.js');
-    this.mkdir('public/images/icons/dest/');
-    this.write('public/images/icons/dest/icons.data.svg.css', '');
-    this.write('public/images/icons/dest/icons.data.png.css', '');
-    this.write('public/images/icons/dest/icons.fallback.css', '');
   }
 };
 
@@ -262,13 +258,13 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('lodash');
   }
   if (this.includeGulpicon === true) {
+    npmList.push('q');
     npmList.push('directory-encoder');
     npmList.push('gulp-svgmin');
     npmList.push('gulp-clean');
     npmList.push('svg-to-png');
     npmList.push('gulp-filter');
     npmList.push('gulp-rename');
-    npmList.push('event-stream');
     npmList.push('xmldom');
     npmList.push('handlebars');
     npmList.push('lodash');
