@@ -240,6 +240,9 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   if (this.includeScss === true) {
     npmList.push('gulp-ruby-sass');
   }
+  npmList.push('gulp-load-plugins');
+  npmList.push('gulp-util');
+  npmList.push('gulp-plumber');
   npmList.push('gulp-jshint');
   npmList.push('gulp-jscs');
   npmList.push('jshint-stylish');
@@ -255,7 +258,6 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
     npmList.push('karma');
     npmList.push('karma-jasmine');
     npmList.push('karma-chrome-launcher');
-    npmList.push('gulp-util');
     npmList.push('lodash');
   }
   if (this.includeGulpicon === true) {

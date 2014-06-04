@@ -1,17 +1,11 @@
 'use strict';
 
 var gulp = require('gulp'),
-    path = require('path'),<% if (includeScss) { %>
-    sass = require('gulp-ruby-sass'),<% } %>
-    jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs'),
+    plugins = require('gulp-load-plugins')(),
+    path = require('path'),
     stylish = require('jshint-stylish'),
-    open = require('gulp-open'),
-    livereload = require('gulp-livereload'),
-    growl = require('gulp-notify-growl'),
-    notify = growl(),<% if (includeAngular) { %>
+    notify = plugins.notifyGrowl(),<% if (includeAngular) { %>
     karma = require('karma').server,
-    gutil = require('gulp-util'),
     _ = require('lodash'),<% } %>
     wiredep = require('wiredep').stream;<% if (includeAngular) { %>
 
@@ -34,7 +28,7 @@ var watching = false;
 
 // a helper function to report karma's exit status
 function karmaExit(exitCode) {
-  gutil.log('Karma has exited with ' + exitCode);
+  plugins.util.log('Karma has exited with ' + exitCode);
 
   // do not kill process when watching
   if (!watching) {
@@ -51,7 +45,7 @@ gulp.task('test', function () {
 
 gulp.task('styles', function () {
   return gulp.src('./public/styles/scss/*.scss')
-    .pipe(sass())
+    .pipe(plugins.sass())
     .pipe(gulp.dest('./public/styles/css'))
     .pipe(notify({
       title: 'Done.',
@@ -61,9 +55,9 @@ gulp.task('styles', function () {
 
 gulp.task('scripts', function () {
   return gulp.src('./public/scripts/**/*.js')
-    .pipe(jshint('.jshintrc'))
-    .pipe(jscs())
-    .pipe(jshint.reporter(stylish))
+    .pipe(plugins.jshint('.jshintrc'))
+    .pipe(plugins.jscs())
+    .pipe(plugins.jshint.reporter(stylish))
     .pipe(notify({
       title: 'Done.',
       message: 'Scripts task complete'
@@ -84,7 +78,7 @@ gulp.task('serve', function () {
 gulp.task('open', ['scripts'<% if (includeScss) { %>, 'styles'<% } %>], function () {
   // A file must be specified as the src when running options.url or gulp will overlook the task.
   gulp.src('./public/index.html')
-  .pipe(open('', {url: 'http://localhost:3000'}));
+  .pipe(plugins.open('', {url: 'http://localhost:3000'}));
 });
 
 // inject bower components
@@ -113,7 +107,7 @@ gulp.task('watch', function () {<% if (includeScss) { %>
   gulp.watch('./bower.json', ['wiredep']);
 
   // Create LiveReload server
-  var server = livereload();
+  var server = plugins.livereload();
 
   // // Watch any files, reload on change
   gulp.watch(['./**', '!./node_modules/**', '!./public/lib/**']).on('change', function (file) {
@@ -191,7 +185,7 @@ gulp.task('gulpicon', function () {
               pngde = new DirectoryEncoder(pngtmp, dataPngCss, deDataConfig),
               pngdefall = new DirectoryEncoder(pngs, urlPngCss, deUrlConfig);
 
-            console.log("Writing CSS");
+            plugins.util.log("Writing CSS");
 
             try {
               if (fs.existsSync(svgtmp)) {
@@ -209,7 +203,7 @@ gulp.task('gulpicon', function () {
 
             // generate preview
             if (fs.existsSync(svgtmp)) {
-              console.log("Generating Preview");
+              plugins.util.log("Generating Preview");
 
               var previewTemplate = path.join(__dirname,'/public/images/icons/templates/gulpicon-preview.hbs');
               var helper = require( path.join( __dirname, '/public/images/icons/lib/', 'gulpicon-helper' ) );
@@ -225,14 +219,14 @@ gulp.task('gulpicon', function () {
                 throw new Error( er );
               }
             }
-            console.log("Cleaning up");
+            plugins.util.log("Cleaning up");
             es.concat(
               gulp.src(svgtmp, {read: false}) // Clean tmp folders
                 .pipe(clean()),
               gulp.src(pngtmp, {read: false})
                 .pipe(clean())
             ).on('end', function(){
-              console.log('done');
+              plugins.util.log('done');
             });
         });
       });
