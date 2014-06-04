@@ -141,6 +141,8 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
       dest = path.join(icons, '/dest/'),
       tmp = path.join(dest, '/tmp/'),
       pngs = path.join(dest, '/pngs/'),
+      pngFilter = plugins.filter('**/*.png'),
+      svgFilter = plugins.filter('**/*.svg'),
       dataSvgCss = path.join(dest, '/icons.data.svg.css'),
       dataPngCss = path.join(dest, '/icons.data.png.css'),
       urlPngCss = path.join(dest, '/icons.fallback.css'),
@@ -148,8 +150,6 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
       helper = require(path.join(icons, '/lib/gulpicon-helper')),
       deferred = Q.defer();
 
-  var pngFilter = plugins.filter('**/*.png');
-  var svgFilter = plugins.filter('**/*.svg');
   gulp.src(src)
     .pipe(pngFilter) // Filter pngs
     .pipe(plugins.rename({prefix: iconPrefix})) // Add icon prefix
