@@ -72,6 +72,10 @@ npm install -g generator-sandbox
 * `--skip-welcome-message`
   Skips the welcome message.
 
+## Contributors
+- [Koji Wakayama](https://github.com/kojiwakayama)
+- [Kentaro Wakayama](https://github.com/kwakayama)
+
 ## License
-[BSD license](http://opensource.org/licenses/bsd-license.php)
+Copyright (c) 2014 Koji Wakayama. Licensed under the [BSD license](http://opensource.org/licenses/bsd-license.php).
 
