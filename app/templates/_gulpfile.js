@@ -1,10 +1,14 @@
 'use strict';
 
 var gulp = require('gulp'),
-    plugins = require('gulp-load-plugins')(),
+    plugins = require('gulp-load-plugins')(),<% if (includeGulpicon) { %>
+    rimraf = require('rimraf'),<% } %>
     path = require('path'),
-    stylish = require('jshint-stylish'),
-    notify = plugins.notifyGrowl(),<% if (includeAngular) { %>
+    nn = require('node-notifier'),
+    growlNotify = plugins.notify.withReporter(function (options, callback) {
+      new nn.Growl().notify(options, callback);
+    }),
+    stylish = require('jshint-stylish'),<% if (includeAngular) { %>
     karma = require('karma').server,
     _ = require('lodash'),<% } %>
     wiredep = require('wiredep').stream;<% if (includeAngular) { %>
@@ -50,7 +54,7 @@ gulp.task('styles', function () {
     .pipe(plugins.csso(true)) // disable structureMinimization
     .pipe(plugins.plumber.stop())
     .pipe(gulp.dest('./public/styles/css'))
-    .pipe(notify({
+    .pipe(growlNotify({
       title: 'Done.',
       message: 'Styles task complete'
     }));
@@ -61,7 +65,7 @@ gulp.task('scripts', function () {
     .pipe(plugins.jshint('.jshintrc'))
     .pipe(plugins.jscs())
     .pipe(plugins.jshint.reporter(stylish))
-    .pipe(notify({
+    .pipe(growlNotify({
       title: 'Done.',
       message: 'Scripts task complete'
     }));
@@ -125,13 +129,14 @@ gulp.task('watch', function () {<% if (includeScss) { %>
 gulp.task('clean-gulpicon', function () {
   var icons = path.join(__dirname, '/public/images/icons/'),
       dest = path.join(icons, '/dest/');
-  return gulp.src(dest, {read: false})  // Remove dest folder
-    .pipe(plugins.clean());
+
+  return rimraf.sync(dest);
 });
 
 gulp.task('gulpicon', ['clean-gulpicon'], function () {
   var fs = require('fs'),
       Q = require('q'),
+      mkdirp = require('mkdirp'),
       svgToPng = require('svg-to-png'),
       DirectoryEncoder = require('directory-encoder'),
       uglify = require('uglify-js');
@@ -150,6 +155,11 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
       helper = require(path.join(icons, '/lib/gulpicon-helper')),
       deferred = Q.defer();
 
+  // Create folders
+  mkdirp.sync(dest);
+  mkdirp.sync(tmp);
+  mkdirp.sync(pngs);
+
   gulp.src(src)
     .pipe(pngFilter) // Filter pngs
     .pipe(plugins.rename({prefix: iconPrefix})) // Add icon prefix
@@ -165,10 +175,7 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
         defaultHeight: '300px'
       };
       svgToPng.convert(tmp, pngs, svgToPngOpts)  // Convert svgs to pngs and put them in pngs folder
-      .then(function (result, err) {
-        if (err) {
-          throw new Error(err);
-        }
+      .then(function () {
         var deDataConfig = {
           pngfolder: pngs,
           pngpath: './pngs/',
@@ -192,38 +199,44 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
         plugins.util.log('Writing CSS');
 
         try {
-          if (fs.existsSync(tmp)) {
             svgde.encode();
-          }
-          if (fs.existsSync(pngs)) {
             pngde.encode();
             pngdefall.encode();
-          }
         } catch (e) {
           throw new Error(e);
         }
 
-        if (fs.existsSync(tmp)) {
-          plugins.util.log('Generating Preview');
+        plugins.util.log('Generating Preview');
 
-          // generate preview
-          var previewTemplate = path.join(__dirname, '/public/images/icons/templates/gulpicon-preview.hbs');
-          var previewhtml = 'preview.html';
-          var cssPrefix = '.';
-          var loader = path.join(__dirname, '/public/images/icons/lib/', 'gulpicon-loader.js');
-          var loaderMin = uglify.minify(loader).code;
+        // generate preview
+        var previewTemplate = path.join(__dirname, '/public/images/icons/templates/gulpicon-preview.hbs');
+        var previewhtml = 'preview.html';
+        var cssPrefix = '.';
+        var loader = path.join(__dirname, '/public/images/icons/lib/', 'gulpicon-loader.js');
+        var loaderMin = uglify.minify(loader).code;
 
-          try {
-            helper.createPreview(tmp, dest, '400px', '300px', loaderMin, previewhtml, cssPrefix, previewTemplate);
-          } catch (er) {
-            throw new Error(er);
-          }
+        try {
+          helper.createPreview(tmp, dest, '400px', '300px', loaderMin, previewhtml, cssPrefix, previewTemplate);
+        } catch (er) {
+          throw new Error(er);
         }
 
         plugins.util.log('Cleaning up');
-        gulp.src(tmp, {read: false}) // Clean tmp folder
-        .pipe(plugins.clean())
-        .on('end', function () {
+
+        rimraf(tmp, function () { // Clean tmp folder
+          // Create files if doesn't exist
+          var exists = fs.existsSync(dataSvgCss);
+          if (!exists) {
+            fs.writeFileSync(dataSvgCss, '');
+          }
+          exists = fs.existsSync(dataPngCss);
+          if (!exists) {
+            fs.writeFileSync(dataPngCss, '');
+          }
+          exists = fs.existsSync(urlPngCss);
+          if (!exists) {
+            fs.writeFileSync(urlPngCss, '');
+          }
           plugins.util.log('done');
           deferred.resolve();
         });
@@ -233,6 +246,6 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
   return deferred.promise;
 });<% } %>
 
-gulp.task('default', function () {
+gulp.task('default', <% if (includeGulpicon) { %>['gulpicon'], <% } %>function () {
   gulp.start(<% if (includeScss) { %>'styles', <% } %>'scripts', 'serve', 'open', 'watch');
 });

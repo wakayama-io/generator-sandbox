@@ -245,7 +245,8 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   npmList.push('jshint-stylish');
   npmList.push('gulp-open');
   npmList.push('gulp-livereload');
-  npmList.push('gulp-notify-growl');
+  npmList.push('gulp-notify');
+  npmList.push('node-notifier');
   npmList.push('connect');
   npmList.push('serve-static');
   npmList.push('morgan');
@@ -259,9 +260,10 @@ SandboxGenerator.prototype.packageJSON = function packageJSON() {
   }
   if (this.includeGulpicon === true) {
     npmList.push('q');
+    npmList.push('mkdirp');
     npmList.push('directory-encoder');
     npmList.push('gulp-svgmin');
-    npmList.push('gulp-clean');
+    npmList.push('rimraf');
     npmList.push('svg-to-png');
     npmList.push('gulp-filter');
     npmList.push('gulp-rename');
