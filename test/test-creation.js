@@ -151,7 +151,6 @@ describe('the sandbox generator', function () {
 
       var expectedContent = [
         ['gulpfile.js', /karma = require\('karma'\).server/],
-        ['gulpfile.js', /gutil = require\('gulp-util'\)/],
         ['gulpfile.js', /_ = require\('lodash'\)/],
         ['gulpfile.js', /karma.start\(_.assign\({}, karmaCommonConf, {singleRun: true}\), karmaExit\);/],
         ['gulpfile.js', /gulp.watch\(\['.\/public\/scripts\/\*\*\/\*.js', '.\/test\/\*\*\/\*.js', 'gulpfile.js'\], \['test'\]\);/]
@@ -186,11 +185,7 @@ describe('the sandbox generator', function () {
         'public/images/icons/lib/',
         'public/images/icons/lib/img-stats.js',
         'public/images/icons/lib/gulpicon-helper.js',
-        'public/images/icons/lib/gulpicon-loader.js',
-        'public/images/icons/dest/',
-        'public/images/icons/dest/icons.data.svg.css',
-        'public/images/icons/dest/icons.data.png.css',
-        'public/images/icons/dest/icons.fallback.css'
+        'public/images/icons/lib/gulpicon-loader.js'
       ];
 
       this.app.options['skip-install'] = true;
@@ -207,7 +202,7 @@ describe('the sandbox generator', function () {
       });
 
       var expectedContent = [
-        ['package.json', /"gulp-clean"/],
+        ['package.json', /"rimraf"/],
         ['package.json', /"directory-encoder"/],
         ['package.json', /"gulp-svgmin"/],
         ['package.json', /"svg-to-png"/],
@@ -218,9 +213,9 @@ describe('the sandbox generator', function () {
         ['package.json', /"handlebars"/],
         ['package.json', /"lodash"/],
         ['package.json', /"uglify-js"/],
-        ['gulpfile.js', /gulp.task\(\'gulpicon\', function \(\) {/],
+        ['gulpfile.js', /gulp.task\(\'gulpicon\', \[\'clean-gulpicon\'\], function \(\) {/],
         ['public/index.html', /<noscript><link href="images\/icons\/dest\/icons.fallback.css" rel="stylesheet"><\/noscript>/],
-        ['public/index.html' ,/gulpicon\(\["images\/icons\/dest\/icons.data.svg.css", "public\/images\/icons\/dest\/icons.data.png.css", "public\/images\/icons\/dest\/icons.fallback.css"\]\);/],
+        ['public/index.html' ,/gulpicon\(\["images\/icons\/dest\/icons.data.svg.css", "images\/icons\/dest\/icons.data.png.css", "images\/icons\/dest\/icons.fallback.css"\]\);/],
         ['public/index.html', /<script src="images\/icons\/lib\/gulpicon-loader.js"><\/script>/]
       ];
 
