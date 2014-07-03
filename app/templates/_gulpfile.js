@@ -199,9 +199,9 @@ gulp.task('gulpicon', ['clean-gulpicon'], function () {
         plugins.util.log('Writing CSS');
 
         try {
-            svgde.encode();
-            pngde.encode();
-            pngdefall.encode();
+          svgde.encode();
+          pngde.encode();
+          pngdefall.encode();
         } catch (e) {
           throw new Error(e);
         }
